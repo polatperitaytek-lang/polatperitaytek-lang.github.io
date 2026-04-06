@@ -131,13 +131,15 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 
 /* tier colours */
 .tc-HT1{color:#a3e635;}.bc-HT1{border-color:#4a7a10;}
+.tc-LT1{color:#86efac;}.bc-LT1{border-color:#2a6a2a;}
 .tc-HT2{color:#4ade80;}.bc-HT2{border-color:#1a7a3a;}
-.tc-HT3{color:#34d399;}.bc-HT3{border-color:#0f6a50;}
-.tc-T1{color:#22c55e;} .bc-T1{border-color:#0d5a2e;}
-.tc-T2{color:#86efac;}
-.tc-T3{color:#6ee7b7;}
-.tc-T4{color:#4a7a4a;}
-.tc-T5{color:#3a5a3a;}
+.tc-LT2{color:#34d399;}.bc-LT2{border-color:#0f6050;}
+.tc-HT3{color:#22c55e;}.bc-HT3{border-color:#0d5a2e;}
+.tc-LT3{color:#6ee7b7;}.bc-LT3{border-color:#0a4a3a;}
+.tc-HT4{color:#4a7a4a;}.bc-HT4{border-color:#2a4a2a;}
+.tc-LT4{color:#3a6a4a;}.bc-LT4{}
+.tc-HT5{color:#3a5a3a;}.bc-HT5{}
+.tc-LT5{color:#2a4a2a;}.bc-LT5{}
 .tc-UNRANKED{color:var(--muted);}
 
 /* overall grid */
@@ -360,7 +362,7 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
         <div class="tt-step"><div class="tt-step-num">01</div><div class="tt-step-t">APPLY</div><div class="tt-step-d">Reach out to the tier list staff through the official channels to apply for a tier test.</div></div>
         <div class="tt-step"><div class="tt-step-num">02</div><div class="tt-step-t">PICK GAMEMODE</div><div class="tt-step-d">Choose a gamemode — Vanilla, UHC, Pot, Sword, Axe, Mace, NethOP, or SMP.</div></div>
         <div class="tt-step"><div class="tt-step-num">03</div><div class="tt-step-t">GET TESTED</div><div class="tt-step-d">A tester will be assigned to evaluate your gameplay and skill level in your chosen mode.</div></div>
-        <div class="tt-step"><div class="tt-step-num">04</div><div class="tt-step-t">GET RANKED</div><div class="tt-step-d">Based on performance, you'll receive a tier from HT1 (elite) down to T5. Retest to improve!</div></div>
+        <div class="tt-step"><div class="tt-step-num">04</div><div class="tt-step-t">GET RANKED</div><div class="tt-step-d">Based on performance, you'll receive a tier from HT1 (elite) down to LT5. Retest to improve!</div></div>
       </div>
     </div>
   </div>
@@ -391,7 +393,7 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
         <div class="gh-note">
           Create a token at <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> →
           Generate new token (classic) → tick <strong>repo</strong> → copy it here.
-          The token is saved only in your browser (localStorage) and never sent anywhere except GitHub's API.
+          The token is saved only in your browser and never sent anywhere except GitHub's API. Also fill in <strong>PUBLIC_OWNER</strong> and <strong>PUBLIC_REPO</strong> in the script (near the top) so all visitors can read the data without logging in.
         </div>
         <button class="gh-save-btn" onclick="saveGHConfig()">💾 Save Config</button>
         <div class="admin-msg" id="gh-msg"></div>
@@ -421,14 +423,16 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
           <div class="admin-field">
             <label class="admin-label">Tier</label>
             <select class="admin-select" id="ap-tier">
-              <option value="HT1">HT1 — High Tier 1</option>
-              <option value="HT2">HT2 — High Tier 2</option>
-              <option value="HT3">HT3 — High Tier 3</option>
-              <option value="T1">T1 — Tier 1</option>
-              <option value="T2">T2 — Tier 2</option>
-              <option value="T3">T3 — Tier 3</option>
-              <option value="T4">T4 — Tier 4</option>
-              <option value="T5">T5 — Tier 5</option>
+              <option value="HT1">HT1 — High Tier 1 (60pts)</option>
+              <option value="LT1">LT1 — Low Tier 1  (45pts)</option>
+              <option value="HT2">HT2 — High Tier 2 (30pts)</option>
+              <option value="LT2">LT2 — Low Tier 2  (20pts)</option>
+              <option value="HT3">HT3 — High Tier 3 (10pts)</option>
+              <option value="LT3">LT3 — Low Tier 3  (6pts)</option>
+              <option value="HT4">HT4 — High Tier 4 (4pts)</option>
+              <option value="LT4">LT4 — Low Tier 4  (3pts)</option>
+              <option value="HT5">HT5 — High Tier 5 (2pts)</option>
+              <option value="LT5">LT5 — Low Tier 5  (1pt)</option>
             </select>
           </div>
           <div class="admin-field">
@@ -494,9 +498,13 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 
 <script>
 /* ============ CHANGE THESE ============ */
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'abctiers2026pertote';
-const DATA_FILE  = 'data/players.json'; // path inside your repo
+const ADMIN_USER  = 'admin';
+const ADMIN_PASS  = 'abctiers2025';
+const DATA_FILE   = 'data/players.json';
+// PUBLIC repo details — so ALL visitors read the same data
+// Set these to YOUR GitHub username and repo name:
+const PUBLIC_OWNER = 'polatperitaytek-lang';   // e.g. 'ItzPertoTe'
+const PUBLIC_REPO  = 'polatperitaytek-lang.github.io';   // e.g. 'abctiers'
 /* ====================================== */
 
 const MODES = {
@@ -509,7 +517,8 @@ const MODES = {
   nethop: {name:'NethOP', icon:'./logos/nethop.svg'},
   smp:    {name:'SMP',    icon:'./logos/smp.svg'},
 };
-const TIER_ORDER = ['HT1','HT2','HT3','T1','T2','T3','T4','T5'];
+const TIER_ORDER  = ['HT1','LT1','HT2','LT2','HT3','LT3','HT4','LT4','HT5','LT5'];
+const TIER_POINTS = {HT1:60,LT1:45,HT2:30,LT2:20,HT3:10,LT3:6,HT4:4,LT4:3,HT5:2,LT5:1};
 
 let isAdmin = false;
 let currentGM = 'vanilla';
@@ -575,10 +584,15 @@ async function ghWriteFile(players, sha) {
 /* =================== DATA LOADING =================== */
 async function loadPlayers() {
   if (cachedPlayers) return cachedPlayers;
-  const {owner,repo} = getGHConfig();
+
+  // Determine owner/repo: use hardcoded PUBLIC_OWNER/PUBLIC_REPO if set,
+  // otherwise fall back to whatever the admin saved in their browser.
+  const owner = PUBLIC_OWNER || getGHConfig().owner;
+  const repo  = PUBLIC_REPO  || getGHConfig().repo;
+
   if (owner && repo) {
+    // Raw URL works for ALL visitors on public repos — no token needed
     try {
-      // Use raw public URL first (works without token for public repos)
       const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/${DATA_FILE}?t=${Date.now()}`;
       const res = await fetch(rawUrl);
       if (res.ok) {
@@ -586,13 +600,14 @@ async function loadPlayers() {
         return cachedPlayers;
       }
     } catch {}
-    // Fallback to API (works for private repos if token set)
+    // Fallback: GitHub API (works if token available)
     try {
       const result = await ghReadFile();
       if (result) { cachedPlayers = result.content; return cachedPlayers; }
     } catch {}
   }
-  // Final fallback: localStorage
+
+  // Last resort: localStorage (only useful locally before GitHub is configured)
   try { cachedPlayers = JSON.parse(localStorage.getItem('abctiers_players')||'[]'); }
   catch { cachedPlayers = []; }
   return cachedPlayers;
@@ -656,7 +671,7 @@ async function renderGMLeaderboard(gm) {
         <span class="lb-name">${p.name}</span>
         <span style="font-size:12px;color:var(--muted);background:var(--surface2);padding:1px 5px;border:1px solid var(--border)">${p.region||''}</span>
       </div></td>
-      <td><span class="lb-tier-cell tc-${p.tier}">${p.tier}</span></td>
+      <td><span class="lb-tier-cell tc-${p.tier}">${p.tier}</span> <span style="font-size:13px;color:var(--muted)">${TIER_POINTS[p.tier]||''} ${TIER_POINTS[p.tier]?'pts':''}</span></td>
     </tr>`;
   }).join('');
   el.innerHTML = `<table class="lb-table">
@@ -786,7 +801,7 @@ async function renderAdminList() {
     <div class="admin-list-item">
       <img class="ali-skin" src="https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/24" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/24'">
       <span class="ali-name">${p.name}</span>
-      <span class="ali-tier tc-${p.tier}">${p.tier}</span>
+      <span class="ali-tier tc-${p.tier}">${p.tier}</span><span style="font-size:12px;color:var(--muted)">(${TIER_POINTS[p.tier]||0}pts)</span>
       <span class="ali-mode">${MODES[p.mode]?.name||p.mode}</span>
       <span style="font-size:11px;color:var(--muted)">${p.region||''}</span>
       <button class="ali-del" onclick="adminDeletePlayer('${p.name.replace(/'/g,"\\'")}','${p.mode}')">✕</button>
@@ -831,8 +846,9 @@ async function renderPlayer(name, uuid) {
       </div>
       <div class="mc-tier-row">
         <span class="mc-tier tc-${cls}">${tier||'Unranked'}</span>
+        ${tier ? `<span style="font-size:14px;color:var(--muted)">${TIER_POINTS[tier]} pts</span>` : ''}
       </div>
-      <div class="mc-footer"><span></span></div>
+      <div class="mc-footer"><span>${e ? e.region||'' : ''}</span></div>
     </div>`;
   }).join('');
 
