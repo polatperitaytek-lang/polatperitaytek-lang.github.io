@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ABCTiers — Rankings</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-<link rel="icon" type="image/x-icon" href="href="https://polatperitaytek-lang.github.io/logos/favicon.ico">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -143,6 +142,13 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 .tc-LT5{color:#2a4a2a;}.bc-LT5{}
 .tc-UNRANKED{color:var(--muted);}
 
+/* rank badges */
+.rank-badge{display:inline-block;font-family:'Press Start 2P',monospace;font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:.5px;vertical-align:middle;}
+.rank-VIP{background:#1a3a5a;border:2px solid #4488cc;color:#88ccff;}
+.rank-VIPplus{background:#3a1a5a;border:2px solid #aa44cc;color:#cc88ff;}
+.rank-OG{background:#3a2a00;border:2px solid #ffd700;color:#ffd700;}
+.rank-none{display:none;}
+
 /* overall grid */
 .overall-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:10px;}
 .omc{background:var(--surface);border:3px solid var(--border);padding:22px 14px;text-align:center;cursor:pointer;transition:border-color .1s,transform .1s;}
@@ -242,6 +248,14 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 /* saving spinner */
 .saving-indicator{display:none;font-size:14px;color:#ffd700;margin-top:6px;}
 .saving-indicator.show{display:block;}
+
+/* admin tabs */
+.admin-tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid var(--border2);}
+.admin-tab{font-family:'Press Start 2P',monospace;font-size:8px;padding:10px 18px;cursor:pointer;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;transition:color .1s,border-color .1s;letter-spacing:.5px;}
+.admin-tab:hover{color:var(--text);}
+.admin-tab.active{color:var(--green4);border-bottom-color:var(--green4);}
+.admin-tab-content{display:none;}
+.admin-tab-content.active{display:block;}
 
 /* player list */
 .admin-list{max-height:320px;overflow-y:auto;margin-top:12px;}
@@ -394,72 +408,115 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
         <div class="gh-note">
           Create a token at <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> →
           Generate new token (classic) → tick <strong>repo</strong> → copy it here.
-          The token is saved only in your browser and never sent anywhere except GitHub's API. Also fill in <strong>PUBLIC_OWNER</strong> and <strong>PUBLIC_REPO</strong> in the script (near the top) so all visitors can read the data without logging in.
+          Token saved only in your browser. Also set <strong>PUBLIC_OWNER</strong> and <strong>PUBLIC_REPO</strong> in the script so all visitors can read data.
         </div>
         <button class="gh-save-btn" onclick="saveGHConfig()">💾 Save Config</button>
         <div class="admin-msg" id="gh-msg"></div>
       </div>
 
-      <div class="admin-grid">
-        <!-- ADD PLAYER -->
-        <div class="admin-section">
-          <div class="admin-section-title">➕ Add / Update Player</div>
-          <div class="admin-field">
-            <label class="admin-label">Minecraft Username</label>
-            <input class="admin-input" id="ap-name" type="text" placeholder="e.g. Notch" autocomplete="off"/>
-          </div>
-          <div class="admin-field">
-            <label class="admin-label">Gamemode</label>
-            <select class="admin-select" id="ap-mode">
-              <option value="vanilla">Vanilla</option>
-              <option value="uhc">UHC</option>
-              <option value="pot">Pot</option>
-              <option value="sword">Sword</option>
-              <option value="axe">Axe</option>
-              <option value="mace">Mace</option>
-              <option value="nethop">NethOP</option>
-              <option value="smp">SMP</option>
-            </select>
-          </div>
-          <div class="admin-field">
-            <label class="admin-label">Tier</label>
-            <select class="admin-select" id="ap-tier">
-              <option value="HT1">HT1 — High Tier 1 (60pts)</option>
-              <option value="LT1">LT1 — Low Tier 1  (45pts)</option>
-              <option value="HT2">HT2 — High Tier 2 (30pts)</option>
-              <option value="LT2">LT2 — Low Tier 2  (20pts)</option>
-              <option value="HT3">HT3 — High Tier 3 (10pts)</option>
-              <option value="LT3">LT3 — Low Tier 3  (6pts)</option>
-              <option value="HT4">HT4 — High Tier 4 (4pts)</option>
-              <option value="LT4">LT4 — Low Tier 4  (3pts)</option>
-              <option value="HT5">HT5 — High Tier 5 (2pts)</option>
-              <option value="LT5">LT5 — Low Tier 5  (1pt)</option>
-            </select>
-          </div>
-          <div class="admin-field">
-            <label class="admin-label">Region</label>
-            <select class="admin-select" id="ap-region">
-              <option value="NA">NA</option>
-              <option value="EU">EU</option>
-              <option value="AS">AS</option>
-              <option value="SA">SA</option>
-              <option value="OC">OC</option>
-            </select>
-          </div>
-          <button class="admin-btn" onclick="adminAddPlayer()">✔ Save Player</button>
-          <div class="saving-indicator" id="saving-ind">⏳ Saving to GitHub…</div>
-          <div class="admin-msg" id="ap-msg"></div>
-        </div>
+      <!-- ADMIN TABS -->
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchAdminTab('tab-players',this)">⚔ Players &amp; Tiers</button>
+        <button class="admin-tab" onclick="switchAdminTab('tab-accounts',this)">👤 Accounts</button>
+      </div>
 
-        <!-- PLAYER LIST -->
-        <div class="admin-section">
-          <div class="admin-section-title">📋 All Ranked Players</div>
-          <div class="admin-list" id="admin-player-list"></div>
-          <div style="margin-top:14px;">
-            <button class="admin-btn danger" onclick="adminClearAll()">🗑 Clear All Data</button>
+      <!-- TAB: PLAYERS -->
+      <div class="admin-tab-content active" id="tab-players">
+        <div class="admin-grid">
+          <div class="admin-section">
+            <div class="admin-section-title">➕ Add / Update Player</div>
+            <div class="admin-field">
+              <label class="admin-label">Minecraft Username</label>
+              <input class="admin-input" id="ap-name" type="text" placeholder="e.g. Notch" autocomplete="off"/>
+            </div>
+            <div class="admin-field">
+              <label class="admin-label">Gamemode</label>
+              <select class="admin-select" id="ap-mode">
+                <option value="vanilla">Vanilla</option>
+                <option value="uhc">UHC</option>
+                <option value="pot">Pot</option>
+                <option value="sword">Sword</option>
+                <option value="axe">Axe</option>
+                <option value="mace">Mace</option>
+                <option value="nethop">NethOP</option>
+                <option value="smp">SMP</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label class="admin-label">Tier</label>
+              <select class="admin-select" id="ap-tier">
+                <option value="HT1">HT1 — High Tier 1 (60pts)</option>
+                <option value="LT1">LT1 — Low Tier 1  (45pts)</option>
+                <option value="HT2">HT2 — High Tier 2 (30pts)</option>
+                <option value="LT2">LT2 — Low Tier 2  (20pts)</option>
+                <option value="HT3">HT3 — High Tier 3 (10pts)</option>
+                <option value="LT3">LT3 — Low Tier 3  (6pts)</option>
+                <option value="HT4">HT4 — High Tier 4 (4pts)</option>
+                <option value="LT4">LT4 — Low Tier 4  (3pts)</option>
+                <option value="HT5">HT5 — High Tier 5 (2pts)</option>
+                <option value="LT5">LT5 — Low Tier 5  (1pt)</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label class="admin-label">Region</label>
+              <select class="admin-select" id="ap-region">
+                <option value="NA">NA</option>
+                <option value="EU">EU</option>
+                <option value="AS">AS</option>
+                <option value="SA">SA</option>
+                <option value="OC">OC</option>
+              </select>
+            </div>
+            <button class="admin-btn" onclick="adminAddPlayer()">✔ Save Player</button>
+            <div class="saving-indicator" id="saving-ind">⏳ Saving to GitHub…</div>
+            <div class="admin-msg" id="ap-msg"></div>
+          </div>
+          <div class="admin-section">
+            <div class="admin-section-title">📋 All Ranked Players</div>
+            <div class="admin-list" id="admin-player-list"></div>
+            <div style="margin-top:14px;">
+              <button class="admin-btn danger" onclick="adminClearAll()">🗑 Clear All Players</button>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- TAB: ACCOUNTS -->
+      <div class="admin-tab-content" id="tab-accounts">
+        <div class="admin-grid">
+          <div class="admin-section">
+            <div class="admin-section-title">➕ Add / Update Account</div>
+            <div class="admin-field">
+              <label class="admin-label">Minecraft Username</label>
+              <input class="admin-input" id="ac-name" type="text" placeholder="e.g. Notch" autocomplete="off"/>
+            </div>
+            <div class="admin-field">
+              <label class="admin-label">Rank</label>
+              <select class="admin-select" id="ac-rank">
+                <option value="">None</option>
+                <option value="VIP">VIP</option>
+                <option value="VIP+">VIP+</option>
+                <option value="OG">OG</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label class="admin-label">Note (optional)</label>
+              <input class="admin-input" id="ac-note" type="text" placeholder="e.g. OG member since 2024" autocomplete="off"/>
+            </div>
+            <button class="admin-btn" onclick="adminSaveAccount()">✔ Save Account</button>
+            <div class="saving-indicator" id="saving-acc-ind">⏳ Saving to GitHub…</div>
+            <div class="admin-msg" id="ac-msg"></div>
+          </div>
+          <div class="admin-section">
+            <div class="admin-section-title">👤 All Accounts</div>
+            <div class="admin-list" id="admin-account-list"></div>
+            <div style="margin-top:14px;">
+              <button class="admin-btn danger" onclick="adminClearAccounts()">🗑 Clear All Accounts</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </main>
@@ -499,13 +556,13 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 
 <script>
 /* ============ CHANGE THESE ============ */
-const ADMIN_USER  = 'admin';
-const ADMIN_PASS  = 'abctiers2025';
-const DATA_FILE   = 'data/players.json';
-// PUBLIC repo details — so ALL visitors read the same data
-// Set these to YOUR GitHub username and repo name:
-const PUBLIC_OWNER = 'polatperitaytek-lang';   // e.g. 'ItzPertoTe'
-const PUBLIC_REPO  = 'polatperitaytek-lang.github.io';   // e.g. 'abctiers'
+const ADMIN_USER     = 'admin';
+const ADMIN_PASS     = 'abctiers2025';
+const PLAYERS_FILE   = 'data/players.json';
+const ACCOUNTS_FILE  = 'data/accounts.json';
+// Set these so ALL visitors read the same data (your public GitHub repo):
+const PUBLIC_OWNER   = '';   // e.g. 'ItzPertoTe'
+const PUBLIC_REPO    = '';   // e.g. 'abctiers'
 /* ====================================== */
 
 const MODES = {
@@ -520,10 +577,12 @@ const MODES = {
 };
 const TIER_ORDER  = ['HT1','LT1','HT2','LT2','HT3','LT3','HT4','LT4','HT5','LT5'];
 const TIER_POINTS = {HT1:60,LT1:45,HT2:30,LT2:20,HT3:10,LT3:6,HT4:4,LT4:3,HT5:2,LT5:1};
+const RANK_LABELS = {'VIP':'VIP','VIP+':'VIP+','OG':'OG'};
 
-let isAdmin = false;
+let isAdmin   = false;
 let currentGM = 'vanilla';
-let cachedPlayers = null; // in-memory cache loaded on page load
+let cachedPlayers  = null;
+let cachedAccounts = null;
 
 /* =================== GITHUB API =================== */
 function getGHConfig() {
@@ -537,96 +596,82 @@ function saveGHConfig() {
   const owner = document.getElementById('gh-owner').value.trim();
   const repo  = document.getElementById('gh-repo').value.trim();
   const token = document.getElementById('gh-token').value.trim();
-  const msg   = document.getElementById('gh-msg');
   if (!owner||!repo||!token) { setMsg('gh-msg','bad','Fill in all three fields.'); return; }
   localStorage.setItem('gh_owner', owner);
   localStorage.setItem('gh_repo',  repo);
   localStorage.setItem('gh_token', token);
-  setMsg('gh-msg','ok','✔ Config saved in your browser.');
+  setMsg('gh-msg','ok','✔ Config saved.');
 }
 
-async function ghReadFile() {
-  const {owner,repo,token} = getGHConfig();
+function resolveRepo() {
+  const owner = PUBLIC_OWNER || getGHConfig().owner;
+  const repo  = PUBLIC_REPO  || getGHConfig().repo;
+  return {owner, repo};
+}
+
+async function ghReadFile(filePath) {
+  const {owner,repo,token} = {...resolveRepo(), token: getGHConfig().token};
   if (!owner||!repo||!token) return null;
   const res = await fetch(
-    `https://api.github.com/repos/${owner}/${repo}/contents/${DATA_FILE}`,
+    `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`,
     { headers:{ Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json' } }
   );
   if (res.status === 404) return { content:[], sha:null };
   if (!res.ok) throw new Error(`GitHub read error: ${res.status}`);
   const json = await res.json();
-  const content = JSON.parse(atob(json.content.replace(/\n/g,'')));
-  return { content, sha: json.sha };
+  return { content: JSON.parse(atob(json.content.replace(/\n/g,''))), sha: json.sha };
 }
 
-async function ghWriteFile(players, sha) {
-  const {owner,repo,token} = getGHConfig();
+async function ghWriteFile(filePath, data, sha) {
+  const {owner,repo,token} = {...resolveRepo(), token: getGHConfig().token};
   if (!owner||!repo||!token) throw new Error('GitHub not configured.');
   const body = {
-    message: `Update tier data [${new Date().toISOString().slice(0,10)}]`,
-    content: btoa(unescape(encodeURIComponent(JSON.stringify(players, null, 2)))),
+    message: `Update ${filePath} [${new Date().toISOString().slice(0,10)}]`,
+    content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))),
   };
   if (sha) body.sha = sha;
   const res = await fetch(
-    `https://api.github.com/repos/${owner}/${repo}/contents/${DATA_FILE}`,
-    {
-      method:'PUT',
-      headers:{ Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json', 'Content-Type':'application/json' },
-      body: JSON.stringify(body)
-    }
+    `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`,
+    { method:'PUT', headers:{ Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json', 'Content-Type':'application/json' }, body: JSON.stringify(body) }
   );
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message||`GitHub write error: ${res.status}`);
-  }
+  if (!res.ok) { const err = await res.json(); throw new Error(err.message||`GitHub write error: ${res.status}`); }
   return await res.json();
+}
+
+async function rawFetch(filePath) {
+  const {owner,repo} = resolveRepo();
+  if (!owner||!repo) return null;
+  try {
+    const res = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/main/${filePath}?t=${Date.now()}`);
+    if (res.ok) return await res.json();
+  } catch {}
+  return null;
 }
 
 /* =================== DATA LOADING =================== */
 async function loadPlayers() {
   if (cachedPlayers) return cachedPlayers;
-
-  // Determine owner/repo: use hardcoded PUBLIC_OWNER/PUBLIC_REPO if set,
-  // otherwise fall back to whatever the admin saved in their browser.
-  const owner = PUBLIC_OWNER || getGHConfig().owner;
-  const repo  = PUBLIC_REPO  || getGHConfig().repo;
-
-  if (owner && repo) {
-    // Raw URL works for ALL visitors on public repos — no token needed
-    try {
-      const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/${DATA_FILE}?t=${Date.now()}`;
-      const res = await fetch(rawUrl);
-      if (res.ok) {
-        cachedPlayers = await res.json();
-        return cachedPlayers;
-      }
-    } catch {}
-    // Fallback: GitHub API (works if token available)
-    try {
-      const result = await ghReadFile();
-      if (result) { cachedPlayers = result.content; return cachedPlayers; }
-    } catch {}
-  }
-
-  // Last resort: localStorage (only useful locally before GitHub is configured)
-  try { cachedPlayers = JSON.parse(localStorage.getItem('abctiers_players')||'[]'); }
-  catch { cachedPlayers = []; }
+  const data = await rawFetch(PLAYERS_FILE) ?? (await ghReadFile(PLAYERS_FILE))?.content ?? [];
+  cachedPlayers = data;
   return cachedPlayers;
 }
+async function loadAccounts() {
+  if (cachedAccounts) return cachedAccounts;
+  const data = await rawFetch(ACCOUNTS_FILE) ?? (await ghReadFile(ACCOUNTS_FILE))?.content ?? [];
+  cachedAccounts = data;
+  return cachedAccounts;
+}
 
-function invalidateCache() { cachedPlayers = null; }
-
-/* =================== SAVE PLAYERS =================== */
+/* =================== SAVE DATA =================== */
 async function savePlayers(players) {
   cachedPlayers = players;
-  localStorage.setItem('abctiers_players', JSON.stringify(players)); // always keep local backup
-
-  const {owner,repo,token} = getGHConfig();
-  if (!owner||!repo||!token) return; // local only
-
-  // Get current sha then write
-  const current = await ghReadFile();
-  await ghWriteFile(players, current?.sha || null);
+  const cur = await ghReadFile(PLAYERS_FILE);
+  await ghWriteFile(PLAYERS_FILE, players, cur?.sha||null);
+}
+async function saveAccounts(accounts) {
+  cachedAccounts = accounts;
+  const cur = await ghReadFile(ACCOUNTS_FILE);
+  await ghWriteFile(ACCOUNTS_FILE, accounts, cur?.sha||null);
 }
 
 /* =================== NAV =================== */
@@ -656,7 +701,7 @@ function showGM(gm) {
 async function renderGMLeaderboard(gm) {
   const el = document.getElementById('gm-lb-content');
   el.innerHTML = `<div class="lb-empty"><div class="lb-empty-sub">Loading…</div></div>`;
-  const all = await loadPlayers();
+  const [all, accounts] = await Promise.all([loadPlayers(), loadAccounts()]);
   const players = all.filter(p => p.mode === gm);
   if (!players.length) {
     el.innerHTML = `<div class="lb-empty"><div class="lb-empty-title">NO RANKINGS YET</div><div class="lb-empty-sub">No players ranked in this mode yet.</div></div>`;
@@ -665,11 +710,14 @@ async function renderGMLeaderboard(gm) {
   players.sort((a,b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier));
   const rows = players.map((p,i) => {
     const rc = i===0?'r1':i===1?'r2':i===2?'r3':'';
+    const acc = accounts.find(a => a.name.toLowerCase()===p.name.toLowerCase());
+    const rankBadge = acc?.rank ? `<span class="rank-badge rank-${acc.rank.replace('+','plus')}">${acc.rank}</span>` : '';
     return `<tr>
       <td><span class="lb-rank ${rc}">${i===0?'👑':'#'+(i+1)}</span></td>
       <td><div class="lb-player">
         <img class="lb-skin" src="https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/28" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/28'">
         <span class="lb-name">${p.name}</span>
+        ${rankBadge}
         <span style="font-size:12px;color:var(--muted);background:var(--surface2);padding:1px 5px;border:1px solid var(--border)">${p.region||''}</span>
       </div></td>
       <td><span class="lb-tier-cell tc-${p.tier}">${p.tier}</span> <span style="font-size:13px;color:var(--muted)">${TIER_POINTS[p.tier]||''} ${TIER_POINTS[p.tier]?'pts':''}</span></td>
@@ -712,16 +760,16 @@ function doLogin() {
     document.getElementById('admin-badge').style.display = 'inline-flex';
     document.getElementById('login-label').textContent = 'Logout';
     document.getElementById('btn-login').onclick = doLogout;
-    // Pre-fill saved config
     const cfg = getGHConfig();
     document.getElementById('gh-owner').value = cfg.owner;
     document.getElementById('gh-repo').value  = cfg.repo;
     document.getElementById('gh-token').value = cfg.token;
     showPage('admin');
     renderAdminList();
+    renderAdminAccountList();
     err.textContent = '';
   } else {
-    err.textContent = '✕ Wrong username or password.';
+    err.textContent = '\u2715 Wrong username or password.';
   }
 }
 function doLogout() {
@@ -733,12 +781,21 @@ function doLogout() {
 }
 document.getElementById('l-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 
-/* =================== ADMIN ACTIONS =================== */
+/* =================== ADMIN TABS =================== */
+function switchAdminTab(tabId, btn) {
+  document.querySelectorAll('.admin-tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* =================== ADMIN: PLAYERS =================== */
 function setMsg(id, type, text) {
   const el = document.getElementById(id);
+  if (!el) return;
   el.className = 'admin-msg ' + type;
   el.textContent = text;
-  if (type!=='warn') setTimeout(()=>el.textContent='', 4000);
+  if (type!=='warn') setTimeout(()=>{ if(el) el.textContent=''; }, 4000);
 }
 
 async function adminAddPlayer() {
@@ -747,66 +804,104 @@ async function adminAddPlayer() {
   const tier   = document.getElementById('ap-tier').value;
   const region = document.getElementById('ap-region').value;
   if (!name) { setMsg('ap-msg','bad','Enter a username.'); return; }
-
-  const ind = document.getElementById('saving-ind');
-  ind.classList.add('show');
+  document.getElementById('saving-ind').classList.add('show');
   setMsg('ap-msg','warn','Saving…');
-
   try {
-    let players = await loadPlayers();
+    let players = [...(await loadPlayers())];
     const idx = players.findIndex(p => p.name.toLowerCase()===name.toLowerCase() && p.mode===mode);
     const entry = {name, mode, tier, region};
     if (idx>=0) players[idx]=entry; else players.push(entry);
     await savePlayers(players);
     document.getElementById('ap-name').value = '';
     renderAdminList();
-    setMsg('ap-msg','ok', idx>=0 ? `✔ Updated ${name} in ${MODES[mode].name}.` : `✔ Added ${name} to ${MODES[mode].name}.`);
-  } catch(e) {
-    setMsg('ap-msg','bad', '✕ '+e.message);
-  } finally {
-    ind.classList.remove('show');
-  }
+    setMsg('ap-msg','ok', idx>=0 ? `✔ Updated ${name}.` : `✔ Added ${name}.`);
+  } catch(e) { setMsg('ap-msg','bad','\u2715 '+e.message); }
+  finally { document.getElementById('saving-ind').classList.remove('show'); }
 }
 
 async function adminDeletePlayer(name, mode) {
   try {
-    let players = await loadPlayers();
-    players = players.filter(p => !(p.name===name && p.mode===mode));
+    let players = (await loadPlayers()).filter(p => !(p.name===name && p.mode===mode));
     await savePlayers(players);
     renderAdminList();
-  } catch(e) {
-    alert('Error deleting: '+e.message);
-  }
+  } catch(e) { alert('Error: '+e.message); }
 }
 
 async function adminClearAll() {
-  if (!confirm('Delete ALL tier data? This cannot be undone.')) return;
-  try {
-    await savePlayers([]);
-    renderAdminList();
-  } catch(e) {
-    alert('Error: '+e.message);
-  }
+  if (!confirm('Delete ALL tier data?')) return;
+  try { await savePlayers([]); renderAdminList(); }
+  catch(e) { alert('Error: '+e.message); }
 }
 
 async function renderAdminList() {
   const el = document.getElementById('admin-player-list');
   el.innerHTML = '<div style="font-size:15px;color:var(--muted);padding:8px 0">Loading…</div>';
   const players = await loadPlayers();
-  if (!players.length) {
-    el.innerHTML = '<div style="font-size:16px;color:var(--muted);padding:12px 0;">No players added yet.</div>';
-    return;
-  }
+  if (!players.length) { el.innerHTML = '<div style="font-size:16px;color:var(--muted);padding:12px 0;">No players yet.</div>'; return; }
   const sorted = [...players].sort((a,b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier));
   el.innerHTML = sorted.map(p => `
     <div class="admin-list-item">
       <img class="ali-skin" src="https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/24" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/24'">
       <span class="ali-name">${p.name}</span>
-      <span class="ali-tier tc-${p.tier}">${p.tier}</span><span style="font-size:12px;color:var(--muted)">(${TIER_POINTS[p.tier]||0}pts)</span>
+      <span class="ali-tier tc-${p.tier}">${p.tier}</span>
+      <span style="font-size:12px;color:var(--muted)">(${TIER_POINTS[p.tier]||0}pts)</span>
       <span class="ali-mode">${MODES[p.mode]?.name||p.mode}</span>
       <span style="font-size:11px;color:var(--muted)">${p.region||''}</span>
-      <button class="ali-del" onclick="adminDeletePlayer('${p.name.replace(/'/g,"\\'")}','${p.mode}')">✕</button>
+      <button class="ali-del" onclick="adminDeletePlayer('${p.name.replace(/'/g,"\\'")}','${p.mode}')">\u2715</button>
     </div>`).join('');
+}
+
+/* =================== ADMIN: ACCOUNTS =================== */
+async function adminSaveAccount() {
+  const name = document.getElementById('ac-name').value.trim();
+  const rank = document.getElementById('ac-rank').value;
+  const note = document.getElementById('ac-note').value.trim();
+  if (!name) { setMsg('ac-msg','bad','Enter a username.'); return; }
+  document.getElementById('saving-acc-ind').classList.add('show');
+  setMsg('ac-msg','warn','Saving…');
+  try {
+    let accounts = [...(await loadAccounts())];
+    const idx = accounts.findIndex(a => a.name.toLowerCase()===name.toLowerCase());
+    const entry = {name, rank, note};
+    if (idx>=0) accounts[idx]=entry; else accounts.push(entry);
+    await saveAccounts(accounts);
+    document.getElementById('ac-name').value = '';
+    document.getElementById('ac-note').value = '';
+    renderAdminAccountList();
+    setMsg('ac-msg','ok', idx>=0 ? `✔ Updated ${name}.` : `✔ Added ${name}.`);
+  } catch(e) { setMsg('ac-msg','bad','\u2715 '+e.message); }
+  finally { document.getElementById('saving-acc-ind').classList.remove('show'); }
+}
+
+async function adminDeleteAccount(name) {
+  try {
+    let accounts = (await loadAccounts()).filter(a => a.name!==name);
+    await saveAccounts(accounts);
+    renderAdminAccountList();
+  } catch(e) { alert('Error: '+e.message); }
+}
+
+async function adminClearAccounts() {
+  if (!confirm('Delete ALL accounts?')) return;
+  try { await saveAccounts([]); renderAdminAccountList(); }
+  catch(e) { alert('Error: '+e.message); }
+}
+
+async function renderAdminAccountList() {
+  const el = document.getElementById('admin-account-list');
+  el.innerHTML = '<div style="font-size:15px;color:var(--muted);padding:8px 0">Loading…</div>';
+  const accounts = await loadAccounts();
+  if (!accounts.length) { el.innerHTML = '<div style="font-size:16px;color:var(--muted);padding:12px 0;">No accounts yet.</div>'; return; }
+  el.innerHTML = accounts.map(a => {
+    const badgeCls = a.rank ? `rank-${a.rank.replace('+','plus')}` : 'rank-none';
+    return `<div class="admin-list-item">
+      <img class="ali-skin" src="https://mc-heads.net/avatar/${encodeURIComponent(a.name)}/24" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/24'">
+      <span class="ali-name">${a.name}</span>
+      ${a.rank ? `<span class="rank-badge ${badgeCls}">${a.rank}</span>` : '<span style="font-size:12px;color:var(--muted)">no rank</span>'}
+      ${a.note ? `<span style="font-size:13px;color:var(--muted);flex:1">${a.note}</span>` : '<span style="flex:1"></span>'}
+      <button class="ali-del" onclick="adminDeleteAccount('${a.name.replace(/'/g,"\\'")}')">\u2715</button>
+    </div>`;
+  }).join('');
 }
 
 /* =================== PUBLIC SEARCH =================== */
@@ -814,27 +909,29 @@ async function lookup() {
   const name = document.getElementById('si').value.trim();
   if (!name) return;
   const el = document.getElementById('playerResult');
-  el.innerHTML = `<div class="state-msg"><span class="ico">🔍</span>Looking up <strong>${name}</strong>…</div>`;
+  el.innerHTML = `<div class="state-msg"><span class="ico">\uD83D\uDD0D</span>Looking up <strong>${name}</strong>\u2026</div>`;
   try {
     const mr = await fetch(`https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(name)}`);
-    if (!mr.ok) { el.innerHTML=`<div class="state-msg err"><span class="ico">❌</span>Player not found.</div>`; return; }
+    if (!mr.ok) { el.innerHTML=`<div class="state-msg err"><span class="ico">\u274C</span>Player not found.</div>`; return; }
     const moj = await mr.json();
     renderPlayer(moj.name, moj.id);
   } catch(e) {
-    el.innerHTML = `<div class="state-msg err"><span class="ico">⚠️</span>${e.message}</div>`;
+    el.innerHTML = `<div class="state-msg err"><span class="ico">\u26A0\uFE0F</span>${e.message}</div>`;
   }
 }
 
 async function renderPlayer(name, uuid) {
   const el = document.getElementById('playerResult');
-  const all = await loadPlayers();
+  const [all, accounts] = await Promise.all([loadPlayers(), loadAccounts()]);
   const entries = all.filter(p => p.name.toLowerCase()===name.toLowerCase());
+  const acc = accounts.find(a => a.name.toLowerCase()===name.toLowerCase());
   const ov = entries.length
     ? [...entries].sort((a,b)=>TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier))[0].tier
     : null;
   const ovCls = ov||'UNRANKED';
   const head = `https://mc-heads.net/avatar/${encodeURIComponent(name)}/56`;
   const namemcUrl = `https://namemc.com/profile/${encodeURIComponent(name)}`;
+  const rankBadge = acc?.rank ? `<span class="rank-badge rank-${acc.rank.replace('+','plus')}" style="margin-left:6px">${acc.rank}</span>` : '';
 
   const cards = Object.entries(MODES).map(([k,m]) => {
     const e = entries.find(p => p.mode===k);
@@ -843,13 +940,13 @@ async function renderPlayer(name, uuid) {
     return `<div class="mode-card bc-${cls}">
       <div class="mc-top">
         <img class="mc-icon" src="${m.icon}" alt="${m.name}">
-        <div><div class="mc-name">${m.name}</div><div class="mc-sub">${e?e.region||'':' '}</div></div>
+        <div><div class="mc-name">${m.name}</div><div class="mc-sub">${e?e.region||'':''}</div></div>
       </div>
       <div class="mc-tier-row">
         <span class="mc-tier tc-${cls}">${tier||'Unranked'}</span>
         ${tier ? `<span style="font-size:14px;color:var(--muted)">${TIER_POINTS[tier]} pts</span>` : ''}
       </div>
-      <div class="mc-footer"><span>${e ? e.region||'' : ''}</span></div>
+      <div class="mc-footer"><span>${e?e.region||'':''}</span></div>
     </div>`;
   }).join('');
 
@@ -857,9 +954,9 @@ async function renderPlayer(name, uuid) {
     <div class="player-card">
       <img class="player-skin" src="${head}" alt="${name}" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/56'">
       <div>
-        <div class="pname">${name}</div>
-        <div class="pmeta">UUID: ${uuid.substring(0,8)}…</div>
-        <a class="namemc-link" href="${namemcUrl}" target="_blank" rel="noopener">↗ View on NameMC</a>
+        <div class="pname">${name}${rankBadge}</div>
+        ${acc?.note ? `<div class="pmeta" style="margin-bottom:2px">${acc.note}</div>` : ''}
+        <a class="namemc-link" href="${namemcUrl}" target="_blank" rel="noopener">\u2197 View on NameMC</a>
       </div>
       <div class="p-overall">
         <div class="p-overall-tier tc-${ovCls}">${ov||'Unranked'}</div>
@@ -867,15 +964,15 @@ async function renderPlayer(name, uuid) {
       </div>
     </div>
     <div style="margin-bottom:36px">
-      <div class="section-head"><span class="sh-title">📊 ALL GAMEMODES</span><div class="sh-line"></div></div>
+      <div class="section-head"><span class="sh-title">\uD83D\uDCCA ALL GAMEMODES</span><div class="sh-line"></div></div>
       <div class="modes-grid">${cards}</div>
     </div>`;
 }
 
 document.getElementById('si').addEventListener('keydown', e => { if(e.key==='Enter') lookup(); });
 
-/* preload players on startup */
-loadPlayers();
+/* preload on startup */
+Promise.all([loadPlayers(), loadAccounts()]);
 </script>
 </body>
 </html>
