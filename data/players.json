@@ -16,5 +16,11 @@
     "mode": "mace",
     "tier": "LT4",
     "region": "EU"
+  },
+  {
+    "name": "SuleymanTe",
+    "mode": "mace",
+    "tier": "LT5",
+    "region": "EU"
   }
 ]
