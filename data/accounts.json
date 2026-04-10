@@ -29,5 +29,13 @@
     "password": "CalaveraYT123",
     "ranks": [],
     "note": "Member"
+  },
+  {
+    "name": "TuntinTe",
+    "password": "tuntinTe123",
+    "ranks": [
+      "VIP+"
+    ],
+    "note": "Member"
   }
 ]
