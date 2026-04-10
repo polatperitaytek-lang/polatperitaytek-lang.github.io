@@ -14,66 +14,32 @@
   --muted:#4a7a4a;--text:#c8f0c8;--white:#e8ffe8;
 }
 html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'VT323',monospace;font-size:16px;}
-body::before{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:
-    repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(0,60,0,.07) 15px,rgba(0,60,0,.07) 16px),
-    repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(0,60,0,.07) 15px,rgba(0,60,0,.07) 16px);
-}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(0,60,0,.07) 15px,rgba(0,60,0,.07) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(0,60,0,.07) 15px,rgba(0,60,0,.07) 16px);}
 
 /* NAV */
-nav{
-  position:sticky;top:0;z-index:200;
-  background-color:#3b1f0a;
+nav{position:sticky;top:0;z-index:200;background-color:#3b1f0a;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='16' height='16' fill='%233b1f0a'/%3E%3Crect x='0' y='0' width='8' height='8' fill='%23572c10'/%3E%3Crect x='8' y='8' width='8' height='8' fill='%23572c10'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%234a2409'/%3E%3Crect x='12' y='0' width='4' height='4' fill='%23452108'/%3E%3Crect x='0' y='12' width='4' height='4' fill='%23452108'/%3E%3Crect x='6' y='2' width='2' height='2' fill='%236b3a18'/%3E%3Crect x='2' y='6' width='2' height='2' fill='%236b3a18'/%3E%3Crect x='10' y='10' width='2' height='2' fill='%236b3a18'/%3E%3Crect x='14' y='6' width='2' height='2' fill='%23291508'/%3E%3C/svg%3E");
-  border-bottom:4px solid #1a0a02;box-shadow:0 4px 0 #0d0501;
-}
+  border-bottom:4px solid #1a0a02;box-shadow:0 4px 0 #0d0501;}
 nav::after{content:'';display:block;height:3px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='3'%3E%3Crect width='4' height='3' fill='%231a0a02'/%3E%3Crect x='4' width='4' height='3' fill='%232a1005'/%3E%3Crect x='8' width='4' height='3' fill='%230d0501'/%3E%3C/svg%3E") repeat-x;}
-.nav-inner{display:flex;align-items:center;padding:0 8px;height:52px;}
-.nav-logo{
-  font-family:'Press Start 2P',monospace;font-size:12px;color:#f5c842;
-  text-shadow:2px 2px 0 #5c3317,3px 3px 0 #1a0a02;
-  display:flex;align-items:center;height:100%;
-  padding:0 18px 0 8px;border-right:3px solid #1a0a02;
-  margin-right:4px;letter-spacing:1px;white-space:nowrap;
-}
+.nav-inner{display:flex;align-items:center;padding:0 8px;height:52px;overflow-x:auto;}
+.nav-inner::-webkit-scrollbar{height:0;}
+.nav-logo{font-family:'Press Start 2P',monospace;font-size:12px;color:#f5c842;text-shadow:2px 2px 0 #5c3317,3px 3px 0 #1a0a02;display:flex;align-items:center;height:100%;padding:0 14px 0 8px;border-right:3px solid #1a0a02;margin-right:4px;letter-spacing:1px;white-space:nowrap;}
 .nav-logo span{color:#a3e635;}
-.nav-btn{
-  display:flex;align-items:center;justify-content:center;height:100%;
-  gap:7px;padding:0 16px;
-  font-family:'Press Start 2P',monospace;font-size:8px;color:#d4a96a;
-  cursor:pointer;border:none;background:none;
-  text-shadow:1px 1px 0 #1a0a02;letter-spacing:.5px;white-space:nowrap;
-  border-right:2px solid #1a0a02;position:relative;transition:background .1s,color .1s;flex-shrink:0;
-}
+.nav-btn{display:flex;align-items:center;justify-content:center;height:100%;gap:6px;padding:0 12px;font-family:'Press Start 2P',monospace;font-size:7px;color:#d4a96a;cursor:pointer;border:none;background:none;text-shadow:1px 1px 0 #1a0a02;letter-spacing:.5px;white-space:nowrap;border-right:2px solid #1a0a02;position:relative;transition:background .1s,color .1s;flex-shrink:0;}
 .nav-btn:hover,.nav-btn.active{background:rgba(255,255,255,.07);color:#f5e8c0;}
-.nav-btn.active::after{
-  content:'';position:absolute;bottom:0;left:6px;right:6px;height:3px;
-  background:var(--green4);box-shadow:0 0 8px var(--green4);
-}
-.nav-btn-icon{width:18px;height:18px;object-fit:contain;image-rendering:pixelated;filter:brightness(1.8) saturate(.5);}
+.nav-btn.active::after{content:'';position:absolute;bottom:0;left:6px;right:6px;height:3px;background:var(--green4);box-shadow:0 0 8px var(--green4);}
+.nav-btn-icon{width:17px;height:17px;object-fit:contain;image-rendering:pixelated;filter:brightness(1.8) saturate(.5);}
 .nav-btn.active .nav-btn-icon,.nav-btn:hover .nav-btn-icon{filter:brightness(2) saturate(.8);}
-.nav-right{margin-left:auto;display:flex;align-items:center;height:100%;}
-.nav-admin-badge{
-  font-family:'Press Start 2P',monospace;font-size:7px;
-  background:#1a3a1a;border:2px solid var(--border2);
-  color:var(--green4);padding:4px 10px;margin-right:6px;letter-spacing:.5px;
-}
+.nav-right{margin-left:auto;display:flex;align-items:center;height:100%;flex-shrink:0;}
+.nav-admin-badge{font-family:'Press Start 2P',monospace;font-size:6px;background:#1a3a1a;border:2px solid var(--border2);color:var(--green4);padding:3px 8px;margin-right:6px;letter-spacing:.5px;white-space:nowrap;}
+.nav-user-badge{font-family:'Press Start 2P',monospace;font-size:6px;background:#1a2a3a;border:2px solid #3a6a8a;color:#88ccff;padding:3px 8px;margin-right:6px;letter-spacing:.5px;white-space:nowrap;}
 
 /* dropdown */
 .dropdown{position:relative;height:100%;}
-.dropdown-menu{
-  display:none;position:absolute;top:100%;left:0;z-index:300;min-width:200px;
-  background-color:#3b1f0a;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='16' height='16' fill='%233b1f0a'/%3E%3Crect x='0' y='0' width='8' height='8' fill='%23572c10'/%3E%3Crect x='8' y='8' width='8' height='8' fill='%23572c10'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%234a2409'/%3E%3Crect x='6' y='2' width='2' height='2' fill='%236b3a18'/%3E%3C/svg%3E");
-  border:3px solid #1a0a02;border-top:none;box-shadow:4px 4px 0 #0d0501;
-}
+.dropdown-menu{display:none;position:absolute;top:100%;left:0;z-index:300;min-width:200px;background-color:#3b1f0a;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='16' height='16' fill='%233b1f0a'/%3E%3Crect x='0' y='0' width='8' height='8' fill='%23572c10'/%3E%3Crect x='8' y='8' width='8' height='8' fill='%23572c10'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%234a2409'/%3E%3Crect x='6' y='2' width='2' height='2' fill='%236b3a18'/%3E%3C/svg%3E");border:3px solid #1a0a02;border-top:none;box-shadow:4px 4px 0 #0d0501;}
 .dropdown-menu.open{display:block;}
-.dropdown-item{
-  display:flex;align-items:center;gap:12px;padding:11px 16px;
-  font-family:'Press Start 2P',monospace;font-size:7px;color:#d4a96a;
-  cursor:pointer;border-bottom:2px solid #1a0a02;transition:background .1s;
-}
+.dropdown-item{display:flex;align-items:center;gap:12px;padding:11px 16px;font-family:'Press Start 2P',monospace;font-size:7px;color:#d4a96a;cursor:pointer;border-bottom:2px solid #1a0a02;transition:background .1s;}
 .dropdown-item:last-child{border-bottom:none;}
 .dropdown-item:hover{background:rgba(255,255,255,.08);color:#f5e8c0;}
 .dd-icon{width:20px;height:20px;object-fit:contain;image-rendering:pixelated;filter:brightness(1.8) saturate(.5);}
@@ -84,10 +50,7 @@ nav::after{content:'';display:block;height:3px;background:url("data:image/svg+xm
 /* MAIN */
 main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20px;}
 .hero{text-align:center;padding:44px 0 40px;}
-.hero-title{
-  font-family:'Press Start 2P',monospace;font-size:clamp(12px,2.8vw,22px);color:var(--green4);
-  text-shadow:3px 3px 0 #16a34a,5px 5px 0 #0a3a0a;line-height:1.7;margin-bottom:10px;letter-spacing:2px;
-}
+.hero-title{font-family:'Press Start 2P',monospace;font-size:clamp(12px,2.8vw,22px);color:var(--green4);text-shadow:3px 3px 0 #16a34a,5px 5px 0 #0a3a0a;line-height:1.7;margin-bottom:10px;letter-spacing:2px;}
 .hero-title span{color:var(--white);}
 .hero-sub{font-size:20px;color:var(--muted);margin-bottom:30px;}
 .search-wrap{display:flex;max-width:500px;margin:0 auto;border:3px solid var(--border2);box-shadow:4px 4px 0 #0a1a0a;}
@@ -95,7 +58,6 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 .search-input::placeholder{color:var(--muted);}
 .search-btn{background:var(--green3);border:none;border-left:3px solid var(--border2);padding:0 20px;color:#e8ffe8;font-family:'Press Start 2P',monospace;font-size:8px;cursor:pointer;letter-spacing:1px;transition:background .1s;white-space:nowrap;}
 .search-btn:hover{background:var(--green2);}
-.search-btn:active{background:var(--green4);color:#000;}
 
 .section-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
 .sh-title{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--green4);text-shadow:2px 2px 0 #0a3a0a;letter-spacing:1px;white-space:nowrap;display:flex;align-items:center;gap:8px;}
@@ -109,7 +71,7 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 /* player card */
 .player-card{background:var(--surface);border:3px solid var(--border2);box-shadow:4px 4px 0 #0a1a0a;padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
 .player-skin{width:56px;height:56px;image-rendering:pixelated;border:3px solid var(--border2);}
-.pname{font-family:'Press Start 2P',monospace;font-size:12px;color:var(--white);text-shadow:2px 2px 0 #0a3a0a;margin-bottom:5px;}
+.pname{font-family:'Press Start 2P',monospace;font-size:12px;color:var(--white);text-shadow:2px 2px 0 #0a3a0a;margin-bottom:5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .pmeta{font-size:15px;color:var(--muted);}
 .namemc-link{display:inline-flex;align-items:center;gap:5px;color:var(--green2);text-decoration:none;font-size:14px;margin-top:4px;transition:color .1s;}
 .namemc-link:hover{color:var(--green4);}
@@ -137,17 +99,20 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 .tc-HT3{color:#22c55e;}.bc-HT3{border-color:#0d5a2e;}
 .tc-LT3{color:#6ee7b7;}.bc-LT3{border-color:#0a4a3a;}
 .tc-HT4{color:#4a7a4a;}.bc-HT4{border-color:#2a4a2a;}
-.tc-LT4{color:#3a6a4a;}.bc-LT4{}
-.tc-HT5{color:#3a5a3a;}.bc-HT5{}
-.tc-LT5{color:#2a4a2a;}.bc-LT5{}
+.tc-LT4{color:#3a6a4a;}
+.tc-HT5{color:#3a5a3a;}
+.tc-LT5{color:#2a4a2a;}
 .tc-UNRANKED{color:var(--muted);}
 
-/* rank badges */
-.rank-badge{display:inline-block;font-family:'Press Start 2P',monospace;font-size:7px;padding:3px 8px;border-radius:2px;letter-spacing:.5px;vertical-align:middle;}
-.rank-VIP{background:#1a3a5a;border:2px solid #4488cc;color:#88ccff;}
-.rank-VIPplus{background:#3a1a5a;border:2px solid #aa44cc;color:#cc88ff;}
-.rank-OG{background:#3a2a00;border:2px solid #ffd700;color:#ffd700;}
-.rank-none{display:none;}
+/* RANK BADGES — new colors */
+.rank-badge{display:inline-flex;align-items:center;font-family:'Press Start 2P',monospace;font-size:7px;padding:3px 8px;letter-spacing:.5px;vertical-align:middle;border-radius:2px;white-space:nowrap;}
+/* VIP: orange-yellow mix */
+.rank-VIP{background:linear-gradient(135deg,#3a1a00,#2a1800);border:2px solid #e07820;color:#ffaa44;}
+/* VIP+: full gold + light yellow */
+.rank-VIPplus{background:linear-gradient(135deg,#3a2800,#2a2000);border:2px solid #ffd700;color:#fff4a0;}
+/* OG: red */
+.rank-OG{background:linear-gradient(135deg,#3a0a0a,#2a0505);border:2px solid #ff3333;color:#ff8888;}
+.rank-badges-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
 
 /* overall grid */
 .overall-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:10px;}
@@ -166,13 +131,40 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 .lb-table tr:hover td{background:var(--surface2);}
 .lb-rank{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--muted);}
 .lb-rank.r1{color:#f5c842;}.lb-rank.r2{color:#b0b0b0;}.lb-rank.r3{color:#cd7f32;}
-.lb-player{display:flex;align-items:center;gap:10px;}
+.lb-player{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .lb-skin{width:28px;height:28px;image-rendering:pixelated;border:2px solid var(--border2);}
 .lb-name{font-size:18px;color:var(--white);}
 .lb-tier-cell{font-family:'Press Start 2P',monospace;font-size:11px;}
 .lb-empty{background:var(--surface);border:3px solid var(--border);padding:44px 24px;text-align:center;}
 .lb-empty-title{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted);margin-bottom:12px;letter-spacing:1px;}
 .lb-empty-sub{font-size:17px;color:var(--muted);}
+
+/* LEADERBOARD PAGE full */
+.lb-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.lb-filter-btn{font-family:'Press Start 2P',monospace;font-size:7px;padding:7px 14px;background:var(--surface);border:2px solid var(--border2);color:var(--muted);cursor:pointer;transition:all .1s;letter-spacing:.5px;}
+.lb-filter-btn:hover,.lb-filter-btn.active{background:var(--surface2);color:var(--green4);border-color:var(--green3);}
+
+/* RANKS PAGE */
+.ranks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+.rank-card{border:3px solid;padding:28px 24px;position:relative;overflow:hidden;}
+.rank-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.rank-card-VIP{background:linear-gradient(135deg,#1a0e00,#140a00);border-color:#e07820;}
+.rank-card-VIP::before{background:linear-gradient(90deg,#e07820,#ffd700,#e07820);}
+.rank-card-VIPplus{background:linear-gradient(135deg,#1a1400,#0e0c00);border-color:#ffd700;}
+.rank-card-VIPplus::before{background:linear-gradient(90deg,#ffd700,#fff4a0,#ffd700);}
+.rank-card-OG{background:linear-gradient(135deg,#1a0505,#0e0303);border-color:#ff3333;}
+.rank-card-OG::before{background:linear-gradient(90deg,#ff3333,#ff8888,#ff3333);}
+.rank-card-icon{font-size:48px;margin-bottom:14px;display:block;}
+.rank-card-name{font-family:'Press Start 2P',monospace;font-size:16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+.rank-card-name-VIP{color:#ffaa44;}
+.rank-card-name-VIPplus{color:#fff4a0;}
+.rank-card-name-OG{color:#ff8888;}
+.rank-card-title{font-family:'Press Start 2P',monospace;font-size:8px;margin-bottom:8px;letter-spacing:.5px;}
+.rank-card-title-VIP{color:#e07820;}
+.rank-card-title-VIPplus{color:#ffd700;}
+.rank-card-title-OG{color:#ff3333;}
+.rank-card-desc{font-size:17px;color:var(--muted);line-height:1.7;}
+.rank-edit-hint{font-size:12px;color:var(--muted);margin-top:10px;font-family:'Press Start 2P',monospace;letter-spacing:.3px;}
 
 /* tiertested */
 .tt-panel{background:var(--surface);border:3px solid var(--border2);box-shadow:4px 4px 0 #0a1a0a;padding:36px 28px;text-align:center;}
@@ -201,7 +193,7 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 .credits-yt:hover{background:#2a0a02;border-color:#ff0000;color:#ff6666;}
 .yt-icon{font-size:14px;color:#ff0000;}
 
-/* auth */
+/* auth box (admin + user login) */
 .auth-box{position:relative;background:var(--surface);border:3px solid var(--border2);box-shadow:6px 6px 0 #0a1a0a;padding:36px 40px;width:90%;max-width:400px;animation:popIn .15s ease;}
 .auth-title{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--green4);text-shadow:2px 2px 0 #0a3a0a;letter-spacing:1px;margin-bottom:24px;text-align:center;}
 .auth-field{margin-bottom:16px;}
@@ -212,23 +204,26 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 .auth-submit{width:100%;background:var(--green3);border:2px solid var(--green2);color:#e8ffe8;padding:12px;font-family:'Press Start 2P',monospace;font-size:8px;cursor:pointer;letter-spacing:1px;margin-top:8px;transition:background .1s;box-shadow:3px 3px 0 #0a3a0a;}
 .auth-submit:hover{background:var(--green2);}
 .auth-err{color:#ff6b6b;font-size:14px;margin-top:8px;text-align:center;min-height:18px;}
+.auth-switch{text-align:center;margin-top:12px;font-size:15px;color:var(--muted);}
+.auth-switch a{color:var(--green2);cursor:pointer;text-decoration:underline;}
 
 /* ADMIN PANEL */
 .admin-panel{background:var(--surface);border:3px solid #ffd700;box-shadow:4px 4px 0 #0a1a0a;padding:24px;margin-bottom:24px;}
 .admin-title{font-family:'Press Start 2P',monospace;font-size:10px;color:#ffd700;text-shadow:2px 2px 0 #5c4700;margin-bottom:20px;}
-
-/* github config box */
 .gh-config{background:var(--surface2);border:2px solid #ffd70066;padding:18px;margin-bottom:20px;}
 .gh-config-title{font-family:'Press Start 2P',monospace;font-size:7px;color:#ffd700;margin-bottom:12px;letter-spacing:.5px;}
 .gh-config-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-@media(max-width:600px){.gh-config-grid{grid-template-columns:1fr;}}
 .gh-note{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.6;}
 .gh-note a{color:var(--green2);}
 .gh-save-btn{margin-top:12px;background:#3a2a00;border:2px solid #ffd700;color:#ffd700;padding:8px 18px;font-family:'Press Start 2P',monospace;font-size:7px;cursor:pointer;letter-spacing:.5px;transition:background .1s;}
 .gh-save-btn:hover{background:#5a4400;}
-
+.admin-tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid var(--border2);}
+.admin-tab{font-family:'Press Start 2P',monospace;font-size:7px;padding:10px 14px;cursor:pointer;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;transition:color .1s,border-color .1s;letter-spacing:.5px;white-space:nowrap;}
+.admin-tab:hover{color:var(--text);}
+.admin-tab.active{color:var(--green4);border-bottom-color:var(--green4);}
+.admin-tab-content{display:none;}
+.admin-tab-content.active{display:block;}
 .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-@media(max-width:600px){.admin-grid{grid-template-columns:1fr;}}
 .admin-section{background:var(--surface2);border:2px solid var(--border2);padding:18px;}
 .admin-section-title{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--green4);margin-bottom:14px;letter-spacing:.5px;}
 .admin-field{margin-bottom:12px;}
@@ -244,39 +239,38 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 .admin-msg.ok{color:var(--green4);}
 .admin-msg.warn{color:#ffd700;}
 .admin-msg.bad{color:#ff6b6b;}
-
-/* saving spinner */
 .saving-indicator{display:none;font-size:14px;color:#ffd700;margin-top:6px;}
 .saving-indicator.show{display:block;}
-
-/* admin tabs */
-.admin-tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid var(--border2);}
-.admin-tab{font-family:'Press Start 2P',monospace;font-size:8px;padding:10px 18px;cursor:pointer;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;transition:color .1s,border-color .1s;letter-spacing:.5px;}
-.admin-tab:hover{color:var(--text);}
-.admin-tab.active{color:var(--green4);border-bottom-color:var(--green4);}
-.admin-tab-content{display:none;}
-.admin-tab-content.active{display:block;}
-
-/* player list */
-.admin-list{max-height:320px;overflow-y:auto;margin-top:12px;}
-.admin-list-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px solid var(--border);font-size:16px;}
+.admin-list{max-height:340px;overflow-y:auto;margin-top:12px;}
+.admin-list-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--border);font-size:15px;flex-wrap:wrap;}
 .admin-list-item:last-child{border-bottom:none;}
 .admin-list-item:hover{background:rgba(255,255,255,.03);}
-.ali-skin{width:24px;height:24px;image-rendering:pixelated;}
-.ali-name{flex:1;color:var(--white);}
-.ali-tier{font-family:'Press Start 2P',monospace;font-size:9px;margin-right:4px;}
-.ali-mode{font-size:13px;color:var(--muted);}
-.ali-del{background:none;border:1px solid #ff444466;color:#ff6666;font-size:12px;padding:2px 7px;cursor:pointer;font-family:'Press Start 2P',monospace;transition:background .1s;}
+.ali-skin{width:24px;height:24px;image-rendering:pixelated;flex-shrink:0;}
+.ali-name{color:var(--white);flex-shrink:0;}
+.ali-tier{font-family:'Press Start 2P',monospace;font-size:9px;flex-shrink:0;}
+.ali-del{background:none;border:1px solid #ff444466;color:#ff6666;font-size:11px;padding:2px 6px;cursor:pointer;font-family:'Press Start 2P',monospace;transition:background .1s;flex-shrink:0;margin-left:auto;}
 .ali-del:hover{background:#3a0a0a;}
+/* rank checkboxes */
+.rank-checks{display:flex;gap:10px;flex-wrap:wrap;}
+.rank-check-label{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:16px;color:var(--text);}
+.rank-check-label input{width:16px;height:16px;accent-color:var(--green3);cursor:pointer;}
+
+/* ranks page editable inputs */
+.rank-edit-input{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.1);color:inherit;font-family:'VT323',monospace;font-size:inherit;outline:none;padding:2px 0;transition:border-color .15s;}
+.rank-edit-input:focus{border-bottom-color:rgba(255,255,255,.4);}
 
 ::-webkit-scrollbar{width:6px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border2);}
-
+@media(max-width:600px){
+  .admin-grid{grid-template-columns:1fr;}
+  .gh-config-grid{grid-template-columns:1fr;}
+  .ranks-grid{grid-template-columns:1fr;}
+}
 @media(max-width:500px){
   .hero-title{font-size:10px;}
-  .nav-logo{font-size:10px;padding:0 10px 0 4px;}
-  .nav-btn{padding:0 10px;font-size:7px;}
+  .nav-logo{font-size:10px;padding:0 8px 0 4px;}
+  .nav-btn{padding:0 8px;font-size:6px;}
   .credits-card,.auth-box{padding:24px 20px;}
 }
 </style>
@@ -288,12 +282,12 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
     <div class="nav-logo">ABC<span>TIERS</span></div>
 
     <button class="nav-btn active" id="btn-overall" onclick="showPage('overall')">
-      <img class="nav-btn-icon" src="./logos/overall.svg" alt="Overall">Overall
+      <img class="nav-btn-icon" src="./logos/overall.svg" alt="">Overall
     </button>
 
     <div class="dropdown" id="dd">
       <button class="nav-btn" id="btn-gm" onclick="toggleDD()">
-        <img class="nav-btn-icon" id="gm-nav-icon" src="./logos/vanilla.svg" alt="Gamemode">
+        <img class="nav-btn-icon" id="gm-nav-icon" src="./logos/vanilla.svg" alt="">
         Gamemode<span class="caret" id="caret">▼</span>
       </button>
       <div class="dropdown-menu" id="ddMenu">
@@ -308,18 +302,27 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
       </div>
     </div>
 
+    <button class="nav-btn" id="btn-lb" onclick="showPage('leaderboard')">
+      🏅 Leaderboard
+    </button>
+
+    <button class="nav-btn" id="btn-ranks" onclick="showPage('ranks')">
+      👑 Ranks
+    </button>
+
     <button class="nav-btn" id="btn-tt" onclick="showPage('tiertested')">
-      <span style="font-size:14px">📋</span>Get Tiertested
+      📋 Get Tiertested
     </button>
 
     <button class="nav-btn" id="btn-credits" onclick="openOverlay('credits-overlay')">
-      <span style="font-size:14px">⭐</span>Credits
+      ⭐ Credits
     </button>
 
     <div class="nav-right">
       <span class="nav-admin-badge" id="admin-badge" style="display:none">⚙ ADMIN</span>
+      <span class="nav-user-badge" id="user-badge" style="display:none"></span>
       <button class="nav-btn" id="btn-login" onclick="openOverlay('login-overlay')" style="border-left:2px solid #1a0a02;">
-        <span style="font-size:14px">🔑</span><span id="login-label">Login</span>
+        🔑 <span id="login-label">Login</span>
       </button>
     </div>
   </div>
@@ -339,19 +342,16 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 
   <!-- PAGE: OVERALL -->
   <div id="page-overall">
-    <div class="section-head">
-      <span class="sh-title"><img src="./logos/overall.svg" alt="">OVERALL</span>
-      <div class="sh-line"></div>
-    </div>
+    <div class="section-head"><span class="sh-title"><img src="./logos/overall.svg" alt="">OVERALL</span><div class="sh-line"></div></div>
     <div class="overall-grid">
-      <div class="omc" onclick="showGM('vanilla')"><img class="omc-icon" src="./logos/vanilla.svg" alt="Vanilla"><div class="omc-name">Vanilla</div><div class="omc-desc">Crystal PvP</div></div>
-      <div class="omc" onclick="showGM('uhc')"><img class="omc-icon" src="./logos/uhc.svg" alt="UHC"><div class="omc-name">UHC</div><div class="omc-desc">UHC Combat</div></div>
-      <div class="omc" onclick="showGM('pot')"><img class="omc-icon" src="./logos/pot.svg" alt="Pot"><div class="omc-name">Pot</div><div class="omc-desc">Diamond Pot</div></div>
-      <div class="omc" onclick="showGM('sword')"><img class="omc-icon" src="./logos/sword.svg" alt="Sword"><div class="omc-name">Sword</div><div class="omc-desc">Sword Combat</div></div>
-      <div class="omc" onclick="showGM('axe')"><img class="omc-icon" src="./logos/axe.svg" alt="Axe"><div class="omc-name">Axe</div><div class="omc-desc">Axe PvP</div></div>
-      <div class="omc" onclick="showGM('mace')"><img class="omc-icon" src="./logos/mace.svg" alt="Mace"><div class="omc-name">Mace</div><div class="omc-desc">Mace PvP</div></div>
-      <div class="omc" onclick="showGM('nethop')"><img class="omc-icon" src="./logos/nethop.svg" alt="NethOP"><div class="omc-name">NethOP</div><div class="omc-desc">Netherite Pot</div></div>
-      <div class="omc" onclick="showGM('smp')"><img class="omc-icon" src="./logos/smp.svg" alt="SMP"><div class="omc-name">SMP</div><div class="omc-desc">Smp style PvP</div></div>
+      <div class="omc" onclick="showGM('vanilla')"><img class="omc-icon" src="./logos/vanilla.svg" alt=""><div class="omc-name">Vanilla</div><div class="omc-desc">Crystal PvP</div></div>
+      <div class="omc" onclick="showGM('uhc')"><img class="omc-icon" src="./logos/uhc.svg" alt=""><div class="omc-name">UHC</div><div class="omc-desc">UHC Combat</div></div>
+      <div class="omc" onclick="showGM('pot')"><img class="omc-icon" src="./logos/pot.svg" alt=""><div class="omc-name">Pot</div><div class="omc-desc">Diamond Pot</div></div>
+      <div class="omc" onclick="showGM('sword')"><img class="omc-icon" src="./logos/sword.svg" alt=""><div class="omc-name">Sword</div><div class="omc-desc">Sword Combat</div></div>
+      <div class="omc" onclick="showGM('axe')"><img class="omc-icon" src="./logos/axe.svg" alt=""><div class="omc-name">Axe</div><div class="omc-desc">Axe PvP</div></div>
+      <div class="omc" onclick="showGM('mace')"><img class="omc-icon" src="./logos/mace.svg" alt=""><div class="omc-name">Mace</div><div class="omc-desc">Mace PvP</div></div>
+      <div class="omc" onclick="showGM('nethop')"><img class="omc-icon" src="./logos/nethop.svg" alt=""><div class="omc-name">NethOP</div><div class="omc-desc">Netherite Pot</div></div>
+      <div class="omc" onclick="showGM('smp')"><img class="omc-icon" src="./logos/smp.svg" alt=""><div class="omc-name">SMP</div><div class="omc-desc">Smp style PvP</div></div>
     </div>
   </div>
 
@@ -365,6 +365,51 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
       <div class="sh-line"></div>
     </div>
     <div id="gm-lb-content"></div>
+  </div>
+
+  <!-- PAGE: LEADERBOARD -->
+  <div id="page-leaderboard" style="display:none">
+    <div class="section-head"><span class="sh-title">🏅 LEADERBOARD</span><div class="sh-line"></div></div>
+    <div class="lb-filters" id="lb-filters"></div>
+    <div id="lb-content"></div>
+  </div>
+
+  <!-- PAGE: RANKS -->
+  <div id="page-ranks" style="display:none">
+    <div class="section-head"><span class="sh-title">👑 RANKS</span><div class="sh-line"></div></div>
+    <div class="ranks-grid">
+
+      <div class="rank-card rank-card-VIP">
+        <span class="rank-card-icon">🔶</span>
+        <div class="rank-card-name rank-card-name-VIP">
+          <span class="rank-badge rank-VIP">VIP</span>
+        </div>
+        <div class="rank-card-title rank-card-title-VIP" id="rank-title-VIP" contenteditable="false">VIP Member</div>
+        <div class="rank-card-desc" id="rank-desc-VIP" contenteditable="false">A special rank awarded to valued members of the community. VIPs get recognition and are highlighted across the tier list.</div>
+        <div class="rank-edit-hint" id="rank-hint-VIP" style="display:none">✎ Click title/desc to edit • Admin only</div>
+      </div>
+
+      <div class="rank-card rank-card-VIPplus">
+        <span class="rank-card-icon">⭐</span>
+        <div class="rank-card-name rank-card-name-VIPplus">
+          <span class="rank-badge rank-VIPplus">VIP+</span>
+        </div>
+        <div class="rank-card-title rank-card-title-VIPplus" id="rank-title-VIPplus" contenteditable="false">Elite VIP Member</div>
+        <div class="rank-card-desc" id="rank-desc-VIPplus" contenteditable="false">An upgraded tier of VIP. VIP+ holders have gone above and beyond for the community and earn the gold badge of honor.</div>
+        <div class="rank-edit-hint" id="rank-hint-VIPplus" style="display:none">✎ Click title/desc to edit • Admin only</div>
+      </div>
+
+      <div class="rank-card rank-card-OG">
+        <span class="rank-card-icon">🔴</span>
+        <div class="rank-card-name rank-card-name-OG">
+          <span class="rank-badge rank-OG">OG</span>
+        </div>
+        <div class="rank-card-title rank-card-title-OG" id="rank-title-OG" contenteditable="false">Original Member</div>
+        <div class="rank-card-desc" id="rank-desc-OG" contenteditable="false">The rarest rank. OG members were here from the very beginning and helped shape what ABCTiers is today. Respect the legends.</div>
+        <div class="rank-edit-hint" id="rank-hint-OG" style="display:none">✎ Click title/desc to edit • Admin only</div>
+      </div>
+
+    </div>
   </div>
 
   <!-- PAGE: GET TIERTESTED -->
@@ -385,39 +430,24 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
   <!-- PAGE: ADMIN -->
   <div id="page-admin" style="display:none">
     <div class="section-head"><span class="sh-title">⚙ ADMIN PANEL</span><div class="sh-line"></div></div>
-
-    <!-- GitHub Config -->
     <div class="admin-panel">
       <div class="admin-title">🐙 GitHub Storage Config</div>
       <div class="gh-config">
         <div class="gh-config-title">⚙ Connect Your GitHub Repo (one-time setup)</div>
         <div class="gh-config-grid">
-          <div class="admin-field">
-            <label class="admin-label">GitHub Username</label>
-            <input class="admin-input" id="gh-owner" placeholder="e.g. ItzPertoTe" autocomplete="off"/>
-          </div>
-          <div class="admin-field">
-            <label class="admin-label">Repository Name</label>
-            <input class="admin-input" id="gh-repo" placeholder="e.g. abctiers" autocomplete="off"/>
-          </div>
-          <div class="admin-field" style="grid-column:1/-1">
-            <label class="admin-label">Personal Access Token (classic, with repo scope)</label>
-            <input class="admin-input" id="gh-token" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off"/>
-          </div>
+          <div class="admin-field"><label class="admin-label">GitHub Username</label><input class="admin-input" id="gh-owner" placeholder="e.g. ItzPertoTe" autocomplete="off"/></div>
+          <div class="admin-field"><label class="admin-label">Repository Name</label><input class="admin-input" id="gh-repo" placeholder="e.g. abctiers" autocomplete="off"/></div>
+          <div class="admin-field" style="grid-column:1/-1"><label class="admin-label">Personal Access Token (repo scope)</label><input class="admin-input" id="gh-token" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off"/></div>
         </div>
-        <div class="gh-note">
-          Create a token at <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> →
-          Generate new token (classic) → tick <strong>repo</strong> → copy it here.
-          Token saved only in your browser. Also set <strong>PUBLIC_OWNER</strong> and <strong>PUBLIC_REPO</strong> in the script so all visitors can read data.
-        </div>
+        <div class="gh-note">Create token at <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> → classic → tick <strong>repo</strong>. Token saved only in your browser. Set <strong>PUBLIC_OWNER</strong> &amp; <strong>PUBLIC_REPO</strong> in the script for public reads.</div>
         <button class="gh-save-btn" onclick="saveGHConfig()">💾 Save Config</button>
         <div class="admin-msg" id="gh-msg"></div>
       </div>
 
-      <!-- ADMIN TABS -->
       <div class="admin-tabs">
-        <button class="admin-tab active" onclick="switchAdminTab('tab-players',this)">⚔ Players &amp; Tiers</button>
+        <button class="admin-tab active" onclick="switchAdminTab('tab-players',this)">⚔ Players</button>
         <button class="admin-tab" onclick="switchAdminTab('tab-accounts',this)">👤 Accounts</button>
+        <button class="admin-tab" onclick="switchAdminTab('tab-ranktext',this)">👑 Rank Text</button>
       </div>
 
       <!-- TAB: PLAYERS -->
@@ -425,46 +455,26 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
         <div class="admin-grid">
           <div class="admin-section">
             <div class="admin-section-title">➕ Add / Update Player</div>
-            <div class="admin-field">
-              <label class="admin-label">Minecraft Username</label>
-              <input class="admin-input" id="ap-name" type="text" placeholder="e.g. Notch" autocomplete="off"/>
-            </div>
-            <div class="admin-field">
-              <label class="admin-label">Gamemode</label>
+            <div class="admin-field"><label class="admin-label">Minecraft Username</label><input class="admin-input" id="ap-name" type="text" placeholder="e.g. Notch" autocomplete="off"/></div>
+            <div class="admin-field"><label class="admin-label">Gamemode</label>
               <select class="admin-select" id="ap-mode">
-                <option value="vanilla">Vanilla</option>
-                <option value="uhc">UHC</option>
-                <option value="pot">Pot</option>
-                <option value="sword">Sword</option>
-                <option value="axe">Axe</option>
-                <option value="mace">Mace</option>
-                <option value="nethop">NethOP</option>
-                <option value="smp">SMP</option>
+                <option value="vanilla">Vanilla</option><option value="uhc">UHC</option><option value="pot">Pot</option>
+                <option value="sword">Sword</option><option value="axe">Axe</option><option value="mace">Mace</option>
+                <option value="nethop">NethOP</option><option value="smp">SMP</option>
               </select>
             </div>
-            <div class="admin-field">
-              <label class="admin-label">Tier</label>
+            <div class="admin-field"><label class="admin-label">Tier</label>
               <select class="admin-select" id="ap-tier">
-                <option value="HT1">HT1 — High Tier 1 (60pts)</option>
-                <option value="LT1">LT1 — Low Tier 1  (45pts)</option>
-                <option value="HT2">HT2 — High Tier 2 (30pts)</option>
-                <option value="LT2">LT2 — Low Tier 2  (20pts)</option>
-                <option value="HT3">HT3 — High Tier 3 (10pts)</option>
-                <option value="LT3">LT3 — Low Tier 3  (6pts)</option>
-                <option value="HT4">HT4 — High Tier 4 (4pts)</option>
-                <option value="LT4">LT4 — Low Tier 4  (3pts)</option>
-                <option value="HT5">HT5 — High Tier 5 (2pts)</option>
-                <option value="LT5">LT5 — Low Tier 5  (1pt)</option>
+                <option value="HT1">HT1 — High Tier 1 (60pts)</option><option value="LT1">LT1 — Low Tier 1 (45pts)</option>
+                <option value="HT2">HT2 — High Tier 2 (30pts)</option><option value="LT2">LT2 — Low Tier 2 (20pts)</option>
+                <option value="HT3">HT3 — High Tier 3 (10pts)</option><option value="LT3">LT3 — Low Tier 3 (6pts)</option>
+                <option value="HT4">HT4 — High Tier 4 (4pts)</option><option value="LT4">LT4 — Low Tier 4 (3pts)</option>
+                <option value="HT5">HT5 — High Tier 5 (2pts)</option><option value="LT5">LT5 — Low Tier 5 (1pt)</option>
               </select>
             </div>
-            <div class="admin-field">
-              <label class="admin-label">Region</label>
+            <div class="admin-field"><label class="admin-label">Region</label>
               <select class="admin-select" id="ap-region">
-                <option value="NA">NA</option>
-                <option value="EU">EU</option>
-                <option value="AS">AS</option>
-                <option value="SA">SA</option>
-                <option value="OC">OC</option>
+                <option value="NA">NA</option><option value="EU">EU</option><option value="AS">AS</option><option value="SA">SA</option><option value="OC">OC</option>
               </select>
             </div>
             <button class="admin-btn" onclick="adminAddPlayer()">✔ Save Player</button>
@@ -474,9 +484,7 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
           <div class="admin-section">
             <div class="admin-section-title">📋 All Ranked Players</div>
             <div class="admin-list" id="admin-player-list"></div>
-            <div style="margin-top:14px;">
-              <button class="admin-btn danger" onclick="adminClearAll()">🗑 Clear All Players</button>
-            </div>
+            <div style="margin-top:14px;"><button class="admin-btn danger" onclick="adminClearAll()">🗑 Clear All Players</button></div>
           </div>
         </div>
       </div>
@@ -486,23 +494,16 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
         <div class="admin-grid">
           <div class="admin-section">
             <div class="admin-section-title">➕ Add / Update Account</div>
-            <div class="admin-field">
-              <label class="admin-label">Minecraft Username</label>
-              <input class="admin-input" id="ac-name" type="text" placeholder="e.g. Notch" autocomplete="off"/>
+            <div class="admin-field"><label class="admin-label">Minecraft Username</label><input class="admin-input" id="ac-name" type="text" placeholder="e.g. Notch" autocomplete="off"/></div>
+            <div class="admin-field"><label class="admin-label">Password (for user login)</label><input class="admin-input" id="ac-pass" type="text" placeholder="set a password" autocomplete="off"/></div>
+            <div class="admin-field"><label class="admin-label">Ranks (select multiple)</label>
+              <div class="rank-checks">
+                <label class="rank-check-label"><input type="checkbox" id="ac-rank-vip" value="VIP"><span class="rank-badge rank-VIP" style="font-size:6px">VIP</span></label>
+                <label class="rank-check-label"><input type="checkbox" id="ac-rank-vipplus" value="VIP+"><span class="rank-badge rank-VIPplus" style="font-size:6px">VIP+</span></label>
+                <label class="rank-check-label"><input type="checkbox" id="ac-rank-og" value="OG"><span class="rank-badge rank-OG" style="font-size:6px">OG</span></label>
+              </div>
             </div>
-            <div class="admin-field">
-              <label class="admin-label">Rank</label>
-              <select class="admin-select" id="ac-rank">
-                <option value="">None</option>
-                <option value="VIP">VIP</option>
-                <option value="VIP+">VIP+</option>
-                <option value="OG">OG</option>
-              </select>
-            </div>
-            <div class="admin-field">
-              <label class="admin-label">Note (optional)</label>
-              <input class="admin-input" id="ac-note" type="text" placeholder="e.g. OG member since 2024" autocomplete="off"/>
-            </div>
+            <div class="admin-field"><label class="admin-label">Note (optional)</label><input class="admin-input" id="ac-note" type="text" placeholder="e.g. OG member since 2024" autocomplete="off"/></div>
             <button class="admin-btn" onclick="adminSaveAccount()">✔ Save Account</button>
             <div class="saving-indicator" id="saving-acc-ind">⏳ Saving to GitHub…</div>
             <div class="admin-msg" id="ac-msg"></div>
@@ -510,10 +511,20 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
           <div class="admin-section">
             <div class="admin-section-title">👤 All Accounts</div>
             <div class="admin-list" id="admin-account-list"></div>
-            <div style="margin-top:14px;">
-              <button class="admin-btn danger" onclick="adminClearAccounts()">🗑 Clear All Accounts</button>
-            </div>
+            <div style="margin-top:14px;"><button class="admin-btn danger" onclick="adminClearAccounts()">🗑 Clear All Accounts</button></div>
           </div>
+        </div>
+      </div>
+
+      <!-- TAB: RANK TEXT -->
+      <div class="admin-tab-content" id="tab-ranktext">
+        <div class="admin-section" style="max-width:600px">
+          <div class="admin-section-title">👑 Edit Rank Titles &amp; Descriptions</div>
+          <p style="font-size:15px;color:var(--muted);margin-bottom:16px;">Changes apply immediately on the Ranks page. Save to GitHub to persist for all visitors.</p>
+          <div id="rank-text-editor"></div>
+          <button class="admin-btn" style="margin-top:16px" onclick="adminSaveRankText()">💾 Save to GitHub</button>
+          <div class="saving-indicator" id="saving-rt-ind">⏳ Saving to GitHub…</div>
+          <div class="admin-msg" id="rt-msg"></div>
         </div>
       </div>
 
@@ -529,26 +540,18 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
     <div class="credits-info">
       <div class="credits-name">ItzPertoTe</div>
       <div class="credits-role">Creator &amp; Developer</div>
-      <a class="credits-yt" href="https://www.youtube.com/@ItzPertoTe" target="_blank" rel="noopener">
-        <span class="yt-icon">▶</span>@ItzPertoTe on YouTube
-      </a>
+      <a class="credits-yt" href="https://www.youtube.com/@ItzPertoTe" target="_blank" rel="noopener"><span class="yt-icon">▶</span>@ItzPertoTe on YouTube</a>
     </div>
   </div>
 </div>
 
-<!-- LOGIN OVERLAY -->
+<!-- LOGIN OVERLAY (admin + user) -->
 <div class="overlay" id="login-overlay">
   <div class="auth-box">
     <button class="overlay-close" onclick="closeOverlay('login-overlay')">✕</button>
-    <div class="auth-title">🔑 ADMIN LOGIN</div>
-    <div class="auth-field">
-      <label class="auth-label">Username</label>
-      <input class="auth-input" id="l-user" type="text" placeholder="admin" autocomplete="off"/>
-    </div>
-    <div class="auth-field">
-      <label class="auth-label">Password</label>
-      <input class="auth-input" id="l-pass" type="password" placeholder="••••••••"/>
-    </div>
+    <div class="auth-title">🔑 LOGIN</div>
+    <div class="auth-field"><label class="auth-label">Username</label><input class="auth-input" id="l-user" type="text" placeholder="username" autocomplete="off"/></div>
+    <div class="auth-field"><label class="auth-label">Password</label><input class="auth-input" id="l-pass" type="password" placeholder="••••••••"/></div>
     <button class="auth-submit" onclick="doLogin()">LOGIN ▶</button>
     <div class="auth-err" id="l-err"></div>
   </div>
@@ -556,13 +559,13 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 
 <script>
 /* ============ CHANGE THESE ============ */
-const ADMIN_USER     = 'admin';
-const ADMIN_PASS     = 'abctiers2025';
-const PLAYERS_FILE   = 'data/players.json';
-const ACCOUNTS_FILE  = 'data/accounts.json';
-// Set these so ALL visitors read the same data (your public GitHub repo):
-const PUBLIC_OWNER   = '';   // e.g. 'ItzPertoTe'
-const PUBLIC_REPO    = '';   // e.g. 'abctiers'
+const ADMIN_USER    = 'admin';
+const ADMIN_PASS    = 'abctiers2025';
+const PLAYERS_FILE  = 'data/players.json';
+const ACCOUNTS_FILE = 'data/accounts.json';
+const RANKTEXT_FILE = 'data/ranktext.json';
+const PUBLIC_OWNER  = '';  // e.g. 'ItzPertoTe'
+const PUBLIC_REPO   = '';  // e.g. 'abctiers'
 /* ====================================== */
 
 const MODES = {
@@ -577,12 +580,15 @@ const MODES = {
 };
 const TIER_ORDER  = ['HT1','LT1','HT2','LT2','HT3','LT3','HT4','LT4','HT5','LT5'];
 const TIER_POINTS = {HT1:60,LT1:45,HT2:30,LT2:20,HT3:10,LT3:6,HT4:4,LT4:3,HT5:2,LT5:1};
-const RANK_LABELS = {'VIP':'VIP','VIP+':'VIP+','OG':'OG'};
+const ALL_RANKS   = ['VIP','VIP+','OG'];
 
-let isAdmin   = false;
+let isAdmin  = false;
+let loggedUser = null; // { name, ranks[] }
 let currentGM = 'vanilla';
+let currentLBMode = 'vanilla';
 let cachedPlayers  = null;
 let cachedAccounts = null;
+let cachedRankText = null;
 
 /* =================== GITHUB API =================== */
 function getGHConfig() {
@@ -602,42 +608,32 @@ function saveGHConfig() {
   localStorage.setItem('gh_token', token);
   setMsg('gh-msg','ok','✔ Config saved.');
 }
-
 function resolveRepo() {
-  const owner = PUBLIC_OWNER || getGHConfig().owner;
-  const repo  = PUBLIC_REPO  || getGHConfig().repo;
-  return {owner, repo};
+  return { owner: PUBLIC_OWNER||getGHConfig().owner, repo: PUBLIC_REPO||getGHConfig().repo };
 }
-
 async function ghReadFile(filePath) {
-  const {owner,repo,token} = {...resolveRepo(), token: getGHConfig().token};
+  const {owner,repo} = resolveRepo();
+  const token = getGHConfig().token;
   if (!owner||!repo||!token) return null;
-  const res = await fetch(
-    `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`,
-    { headers:{ Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json' } }
-  );
-  if (res.status === 404) return { content:[], sha:null };
+  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`,
+    { headers:{ Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json' } });
+  if (res.status===404) return { content:[], sha:null };
   if (!res.ok) throw new Error(`GitHub read error: ${res.status}`);
   const json = await res.json();
   return { content: JSON.parse(atob(json.content.replace(/\n/g,''))), sha: json.sha };
 }
-
 async function ghWriteFile(filePath, data, sha) {
-  const {owner,repo,token} = {...resolveRepo(), token: getGHConfig().token};
+  const {owner,repo} = resolveRepo();
+  const token = getGHConfig().token;
   if (!owner||!repo||!token) throw new Error('GitHub not configured.');
-  const body = {
-    message: `Update ${filePath} [${new Date().toISOString().slice(0,10)}]`,
-    content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))),
-  };
+  const body = { message:`Update ${filePath} [${new Date().toISOString().slice(0,10)}]`,
+    content: btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2)))) };
   if (sha) body.sha = sha;
-  const res = await fetch(
-    `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`,
-    { method:'PUT', headers:{ Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json', 'Content-Type':'application/json' }, body: JSON.stringify(body) }
-  );
-  if (!res.ok) { const err = await res.json(); throw new Error(err.message||`GitHub write error: ${res.status}`); }
+  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`,
+    { method:'PUT', headers:{ Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json', 'Content-Type':'application/json' }, body: JSON.stringify(body) });
+  if (!res.ok) { const e=await res.json(); throw new Error(e.message||`GitHub write error: ${res.status}`); }
   return await res.json();
 }
-
 async function rawFetch(filePath) {
   const {owner,repo} = resolveRepo();
   if (!owner||!repo) return null;
@@ -649,45 +645,81 @@ async function rawFetch(filePath) {
 }
 
 /* =================== DATA LOADING =================== */
-async function loadPlayers() {
-  if (cachedPlayers) return cachedPlayers;
-  const data = await rawFetch(PLAYERS_FILE) ?? (await ghReadFile(PLAYERS_FILE))?.content ?? [];
-  cachedPlayers = data;
-  return cachedPlayers;
+async function loadPlayers()  { if(!cachedPlayers)  cachedPlayers  = await rawFetch(PLAYERS_FILE)  ?? (await ghReadFile(PLAYERS_FILE))?.content  ?? []; return cachedPlayers; }
+async function loadAccounts() { if(!cachedAccounts) cachedAccounts = await rawFetch(ACCOUNTS_FILE) ?? (await ghReadFile(ACCOUNTS_FILE))?.content ?? []; return cachedAccounts; }
+async function loadRankText() {
+  if (!cachedRankText) {
+    const data = await rawFetch(RANKTEXT_FILE) ?? (await ghReadFile(RANKTEXT_FILE))?.content ?? {};
+    cachedRankText = data;
+    applyRankText(data);
+  }
+  return cachedRankText;
 }
-async function loadAccounts() {
-  if (cachedAccounts) return cachedAccounts;
-  const data = await rawFetch(ACCOUNTS_FILE) ?? (await ghReadFile(ACCOUNTS_FILE))?.content ?? [];
-  cachedAccounts = data;
-  return cachedAccounts;
-}
+async function savePlayers(p)  { cachedPlayers  = p; const c=await ghReadFile(PLAYERS_FILE);  await ghWriteFile(PLAYERS_FILE,  p, c?.sha||null); }
+async function saveAccounts(a) { cachedAccounts = a; const c=await ghReadFile(ACCOUNTS_FILE); await ghWriteFile(ACCOUNTS_FILE, a, c?.sha||null); }
+async function saveRankText(r) { cachedRankText = r; const c=await ghReadFile(RANKTEXT_FILE); await ghWriteFile(RANKTEXT_FILE, r, c?.sha||null); }
 
-/* =================== SAVE DATA =================== */
-async function savePlayers(players) {
-  cachedPlayers = players;
-  const cur = await ghReadFile(PLAYERS_FILE);
-  await ghWriteFile(PLAYERS_FILE, players, cur?.sha||null);
+/* =================== RANK TEXT =================== */
+function applyRankText(data) {
+  ['VIP','VIPplus','OG'].forEach(k => {
+    const ti = document.getElementById('rank-title-'+k);
+    const di = document.getElementById('rank-desc-'+k);
+    if (ti && data['title_'+k]) ti.textContent = data['title_'+k];
+    if (di && data['desc_'+k])  di.textContent  = data['desc_'+k];
+  });
 }
-async function saveAccounts(accounts) {
-  cachedAccounts = accounts;
-  const cur = await ghReadFile(ACCOUNTS_FILE);
-  await ghWriteFile(ACCOUNTS_FILE, accounts, cur?.sha||null);
+function enableRankEditing(on) {
+  ['VIP','VIPplus','OG'].forEach(k => {
+    const ti = document.getElementById('rank-title-'+k);
+    const di = document.getElementById('rank-desc-'+k);
+    const hi = document.getElementById('rank-hint-'+k);
+    if (ti) ti.contentEditable = on ? 'true' : 'false';
+    if (di) di.contentEditable = on ? 'true' : 'false';
+    if (hi) hi.style.display   = on ? 'block' : 'none';
+  });
+}
+function buildRankTextEditor() {
+  const el = document.getElementById('rank-text-editor');
+  el.innerHTML = ['VIP','VIPplus','OG'].map(k => {
+    const label = k==='VIPplus'?'VIP+':k;
+    return `<div style="margin-bottom:18px;padding:14px;background:var(--bg);border:1px solid var(--border2)">
+      <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--muted);margin-bottom:10px">${label}</div>
+      <div class="admin-field"><label class="admin-label">Title</label><input class="admin-input" id="rte-title-${k}" value="${(cachedRankText||{})['title_'+k]||''}" placeholder="Rank title"/></div>
+      <div class="admin-field"><label class="admin-label">Description</label><input class="admin-input" id="rte-desc-${k}" value="${(cachedRankText||{})['desc_'+k]||''}" placeholder="Rank description"/></div>
+    </div>`;
+  }).join('');
+}
+async function adminSaveRankText() {
+  document.getElementById('saving-rt-ind').classList.add('show');
+  setMsg('rt-msg','warn','Saving…');
+  try {
+    const data = {};
+    ['VIP','VIPplus','OG'].forEach(k => {
+      data['title_'+k] = document.getElementById('rte-title-'+k)?.value||'';
+      data['desc_'+k]  = document.getElementById('rte-desc-'+k)?.value||'';
+    });
+    applyRankText(data);
+    await saveRankText(data);
+    setMsg('rt-msg','ok','✔ Rank text saved.');
+  } catch(e) { setMsg('rt-msg','bad','✕ '+e.message); }
+  finally { document.getElementById('saving-rt-ind').classList.remove('show'); }
 }
 
 /* =================== NAV =================== */
 function showPage(p) {
-  ['overall','gamemode','tiertested','admin'].forEach(x =>
-    document.getElementById('page-'+x).style.display = 'none'
-  );
-  document.getElementById('page-'+p).style.display = 'block';
-  ['btn-overall','btn-gm','btn-tt'].forEach(b =>
-    document.getElementById(b).classList.remove('active')
-  );
-  if (p==='overall')    document.getElementById('btn-overall').classList.add('active');
-  if (p==='tiertested') document.getElementById('btn-tt').classList.add('active');
+  ['overall','gamemode','leaderboard','ranks','tiertested','admin'].forEach(x =>
+    document.getElementById('page-'+x).style.display='none');
+  document.getElementById('page-'+p).style.display='block';
+  ['btn-overall','btn-gm','btn-lb','btn-ranks','btn-tt'].forEach(b => {
+    const el = document.getElementById(b); if(el) el.classList.remove('active');
+  });
+  if (p==='overall')     document.getElementById('btn-overall').classList.add('active');
+  if (p==='leaderboard') document.getElementById('btn-lb').classList.add('active');
+  if (p==='ranks')       { document.getElementById('btn-ranks').classList.add('active'); loadRankText(); }
+  if (p==='tiertested')  document.getElementById('btn-tt').classList.add('active');
+  if (p==='leaderboard') renderLeaderboard(currentLBMode);
   closeDD();
 }
-
 function showGM(gm) {
   currentGM = gm;
   document.getElementById('gm-title').textContent = MODES[gm].name.toUpperCase();
@@ -698,265 +730,289 @@ function showGM(gm) {
   renderGMLeaderboard(gm);
 }
 
-async function renderGMLeaderboard(gm) {
-  const el = document.getElementById('gm-lb-content');
+/* =================== LEADERBOARD PAGE =================== */
+async function renderLeaderboard(gm) {
+  currentLBMode = gm;
+  const filtersEl = document.getElementById('lb-filters');
+  filtersEl.innerHTML = Object.entries(MODES).map(([k,m]) =>
+    `<button class="lb-filter-btn${k===gm?' active':''}" onclick="renderLeaderboard('${k}')">${m.name}</button>`
+  ).join('');
+  const el = document.getElementById('lb-content');
   el.innerHTML = `<div class="lb-empty"><div class="lb-empty-sub">Loading…</div></div>`;
   const [all, accounts] = await Promise.all([loadPlayers(), loadAccounts()]);
-  const players = all.filter(p => p.mode === gm);
+  const players = all.filter(p => p.mode===gm);
   if (!players.length) {
     el.innerHTML = `<div class="lb-empty"><div class="lb-empty-title">NO RANKINGS YET</div><div class="lb-empty-sub">No players ranked in this mode yet.</div></div>`;
     return;
   }
-  players.sort((a,b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier));
-  const rows = players.map((p,i) => {
-    const rc = i===0?'r1':i===1?'r2':i===2?'r3':'';
-    const acc = accounts.find(a => a.name.toLowerCase()===p.name.toLowerCase());
-    const rankBadge = acc?.rank ? `<span class="rank-badge rank-${acc.rank.replace('+','plus')}">${acc.rank}</span>` : '';
-    return `<tr>
-      <td><span class="lb-rank ${rc}">${i===0?'👑':'#'+(i+1)}</span></td>
-      <td><div class="lb-player">
-        <img class="lb-skin" src="https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/28" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/28'">
-        <span class="lb-name">${p.name}</span>
-        ${rankBadge}
-        <span style="font-size:12px;color:var(--muted);background:var(--surface2);padding:1px 5px;border:1px solid var(--border)">${p.region||''}</span>
-      </div></td>
-      <td><span class="lb-tier-cell tc-${p.tier}">${p.tier}</span> <span style="font-size:13px;color:var(--muted)">${TIER_POINTS[p.tier]||''} ${TIER_POINTS[p.tier]?'pts':''}</span></td>
-    </tr>`;
-  }).join('');
-  el.innerHTML = `<table class="lb-table">
-    <thead><tr><th>#</th><th>Player</th><th>Tier</th></tr></thead>
-    <tbody>${rows}</tbody>
-  </table>`;
+  players.sort((a,b) => TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier));
+  el.innerHTML = `<table class="lb-table"><thead><tr><th>#</th><th>Player</th><th>Tier</th></tr></thead><tbody>
+    ${players.map((p,i) => {
+      const rc=i===0?'r1':i===1?'r2':i===2?'r3':'';
+      const acc=accounts.find(a=>a.name.toLowerCase()===p.name.toLowerCase());
+      const badges=rankBadgesHtml(acc?.ranks||[]);
+      return `<tr><td><span class="lb-rank ${rc}">${i===0?'👑':'#'+(i+1)}</span></td>
+        <td><div class="lb-player"><img class="lb-skin" src="https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/28" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/28'">
+          <span class="lb-name">${p.name}</span>${badges}
+          <span style="font-size:12px;color:var(--muted);background:var(--surface2);padding:1px 5px;border:1px solid var(--border)">${p.region||''}</span>
+        </div></td>
+        <td><span class="lb-tier-cell tc-${p.tier}">${p.tier}</span> <span style="font-size:13px;color:var(--muted)">${TIER_POINTS[p.tier]||''} ${TIER_POINTS[p.tier]?'pts':''}</span></td>
+      </tr>`;
+    }).join('')}
+  </tbody></table>`;
+}
+
+async function renderGMLeaderboard(gm) {
+  const el = document.getElementById('gm-lb-content');
+  el.innerHTML = `<div class="lb-empty"><div class="lb-empty-sub">Loading…</div></div>`;
+  const [all,accounts] = await Promise.all([loadPlayers(),loadAccounts()]);
+  const players = all.filter(p=>p.mode===gm);
+  if (!players.length) { el.innerHTML=`<div class="lb-empty"><div class="lb-empty-title">NO RANKINGS YET</div><div class="lb-empty-sub">No players ranked in this mode yet.</div></div>`; return; }
+  players.sort((a,b)=>TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier));
+  el.innerHTML=`<table class="lb-table"><thead><tr><th>#</th><th>Player</th><th>Tier</th></tr></thead><tbody>
+    ${players.map((p,i)=>{
+      const rc=i===0?'r1':i===1?'r2':i===2?'r3':'';
+      const acc=accounts.find(a=>a.name.toLowerCase()===p.name.toLowerCase());
+      const badges=rankBadgesHtml(acc?.ranks||[]);
+      return `<tr><td><span class="lb-rank ${rc}">${i===0?'👑':'#'+(i+1)}</span></td>
+        <td><div class="lb-player"><img class="lb-skin" src="https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/28" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/28'">
+          <span class="lb-name">${p.name}</span>${badges}
+          <span style="font-size:12px;color:var(--muted);background:var(--surface2);padding:1px 5px;border:1px solid var(--border)">${p.region||''}</span>
+        </div></td>
+        <td><span class="lb-tier-cell tc-${p.tier}">${p.tier}</span> <span style="font-size:13px;color:var(--muted)">${TIER_POINTS[p.tier]||''} ${TIER_POINTS[p.tier]?'pts':''}</span></td>
+      </tr>`;
+    }).join('')}
+  </tbody></table>`;
+}
+
+function rankBadgesHtml(ranks) {
+  if (!ranks||!ranks.length) return '';
+  return ranks.map(r=>`<span class="rank-badge rank-${r.replace('+','plus')}">${r}</span>`).join('');
 }
 
 /* =================== DROPDOWN =================== */
-function toggleDD() {
-  const open = document.getElementById('ddMenu').classList.toggle('open');
-  document.getElementById('caret').classList.toggle('open', open);
-}
-function closeDD() {
-  document.getElementById('ddMenu').classList.remove('open');
-  document.getElementById('caret').classList.remove('open');
-}
-document.addEventListener('click', e => {
-  if (!document.getElementById('dd').contains(e.target)) closeDD();
-});
+function toggleDD() { const o=document.getElementById('ddMenu').classList.toggle('open'); document.getElementById('caret').classList.toggle('open',o); }
+function closeDD()  { document.getElementById('ddMenu').classList.remove('open'); document.getElementById('caret').classList.remove('open'); }
+document.addEventListener('click',e=>{ if(!document.getElementById('dd').contains(e.target)) closeDD(); });
 
 /* =================== OVERLAYS =================== */
 function openOverlay(id)  { document.getElementById(id).classList.add('open'); }
 function closeOverlay(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.overlay').forEach(ov => {
-  ov.addEventListener('click', function(e) { if (e.target===this) closeOverlay(this.id); });
+document.querySelectorAll('.overlay').forEach(ov=>{
+  ov.addEventListener('click',function(e){ if(e.target===this) closeOverlay(this.id); });
 });
 
 /* =================== AUTH =================== */
-function doLogin() {
+async function doLogin() {
   const u = document.getElementById('l-user').value.trim();
   const p = document.getElementById('l-pass').value;
   const err = document.getElementById('l-err');
+  err.textContent = '';
+
+  // Admin login
   if (u===ADMIN_USER && p===ADMIN_PASS) {
     isAdmin = true;
     closeOverlay('login-overlay');
-    document.getElementById('admin-badge').style.display = 'inline-flex';
-    document.getElementById('login-label').textContent = 'Logout';
+    document.getElementById('admin-badge').style.display='inline-flex';
+    document.getElementById('login-label').textContent='Logout';
     document.getElementById('btn-login').onclick = doLogout;
-    const cfg = getGHConfig();
-    document.getElementById('gh-owner').value = cfg.owner;
-    document.getElementById('gh-repo').value  = cfg.repo;
-    document.getElementById('gh-token').value = cfg.token;
+    const cfg=getGHConfig();
+    document.getElementById('gh-owner').value=cfg.owner;
+    document.getElementById('gh-repo').value=cfg.repo;
+    document.getElementById('gh-token').value=cfg.token;
+    enableRankEditing(true);
     showPage('admin');
     renderAdminList();
     renderAdminAccountList();
-    err.textContent = '';
-  } else {
-    err.textContent = '\u2715 Wrong username or password.';
+    return;
   }
+
+  // User login — check accounts
+  try {
+    const accounts = await loadAccounts();
+    const acc = accounts.find(a => a.name.toLowerCase()===u.toLowerCase() && a.password===p);
+    if (acc) {
+      loggedUser = { name: acc.name, ranks: acc.ranks||[] };
+      closeOverlay('login-overlay');
+      document.getElementById('user-badge').textContent = '👤 '+acc.name;
+      document.getElementById('user-badge').style.display='inline-flex';
+      document.getElementById('login-label').textContent='Logout';
+      document.getElementById('btn-login').onclick = doLogout;
+      return;
+    }
+  } catch {}
+
+  err.textContent = '✕ Wrong username or password.';
 }
+
 function doLogout() {
-  isAdmin = false;
-  document.getElementById('admin-badge').style.display = 'none';
-  document.getElementById('login-label').textContent = 'Login';
-  document.getElementById('btn-login').onclick = () => openOverlay('login-overlay');
+  isAdmin = false; loggedUser = null;
+  document.getElementById('admin-badge').style.display='none';
+  document.getElementById('user-badge').style.display='none';
+  document.getElementById('login-label').textContent='Login';
+  document.getElementById('btn-login').onclick = ()=>openOverlay('login-overlay');
+  enableRankEditing(false);
   showPage('overall');
 }
-document.getElementById('l-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('l-pass').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
 
 /* =================== ADMIN TABS =================== */
 function switchAdminTab(tabId, btn) {
-  document.querySelectorAll('.admin-tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
   btn.classList.add('active');
+  if (tabId==='tab-ranktext') { loadRankText().then(()=>buildRankTextEditor()); }
 }
 
 /* =================== ADMIN: PLAYERS =================== */
-function setMsg(id, type, text) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.className = 'admin-msg ' + type;
-  el.textContent = text;
-  if (type!=='warn') setTimeout(()=>{ if(el) el.textContent=''; }, 4000);
+function setMsg(id,type,text) {
+  const el=document.getElementById(id); if(!el)return;
+  el.className='admin-msg '+type; el.textContent=text;
+  if(type!=='warn') setTimeout(()=>{ if(el) el.textContent=''; },4000);
 }
-
 async function adminAddPlayer() {
-  const name   = document.getElementById('ap-name').value.trim();
-  const mode   = document.getElementById('ap-mode').value;
-  const tier   = document.getElementById('ap-tier').value;
-  const region = document.getElementById('ap-region').value;
-  if (!name) { setMsg('ap-msg','bad','Enter a username.'); return; }
+  const name=document.getElementById('ap-name').value.trim();
+  const mode=document.getElementById('ap-mode').value;
+  const tier=document.getElementById('ap-tier').value;
+  const region=document.getElementById('ap-region').value;
+  if(!name){setMsg('ap-msg','bad','Enter a username.');return;}
   document.getElementById('saving-ind').classList.add('show');
   setMsg('ap-msg','warn','Saving…');
   try {
-    let players = [...(await loadPlayers())];
-    const idx = players.findIndex(p => p.name.toLowerCase()===name.toLowerCase() && p.mode===mode);
-    const entry = {name, mode, tier, region};
-    if (idx>=0) players[idx]=entry; else players.push(entry);
+    let players=[...(await loadPlayers())];
+    const idx=players.findIndex(p=>p.name.toLowerCase()===name.toLowerCase()&&p.mode===mode);
+    const entry={name,mode,tier,region};
+    if(idx>=0) players[idx]=entry; else players.push(entry);
     await savePlayers(players);
-    document.getElementById('ap-name').value = '';
+    document.getElementById('ap-name').value='';
     renderAdminList();
-    setMsg('ap-msg','ok', idx>=0 ? `✔ Updated ${name}.` : `✔ Added ${name}.`);
-  } catch(e) { setMsg('ap-msg','bad','\u2715 '+e.message); }
-  finally { document.getElementById('saving-ind').classList.remove('show'); }
+    setMsg('ap-msg','ok',idx>=0?`✔ Updated ${name}.`:`✔ Added ${name}.`);
+  } catch(e){setMsg('ap-msg','bad','✕ '+e.message);}
+  finally{document.getElementById('saving-ind').classList.remove('show');}
 }
-
-async function adminDeletePlayer(name, mode) {
-  try {
-    let players = (await loadPlayers()).filter(p => !(p.name===name && p.mode===mode));
-    await savePlayers(players);
-    renderAdminList();
-  } catch(e) { alert('Error: '+e.message); }
+async function adminDeletePlayer(name,mode) {
+  try { let p=(await loadPlayers()).filter(x=>!(x.name===name&&x.mode===mode)); await savePlayers(p); renderAdminList(); }
+  catch(e){alert('Error: '+e.message);}
 }
-
 async function adminClearAll() {
-  if (!confirm('Delete ALL tier data?')) return;
-  try { await savePlayers([]); renderAdminList(); }
-  catch(e) { alert('Error: '+e.message); }
+  if(!confirm('Delete ALL tier data?')) return;
+  try{await savePlayers([]);renderAdminList();}catch(e){alert('Error: '+e.message);}
 }
-
 async function renderAdminList() {
-  const el = document.getElementById('admin-player-list');
-  el.innerHTML = '<div style="font-size:15px;color:var(--muted);padding:8px 0">Loading…</div>';
-  const players = await loadPlayers();
-  if (!players.length) { el.innerHTML = '<div style="font-size:16px;color:var(--muted);padding:12px 0;">No players yet.</div>'; return; }
-  const sorted = [...players].sort((a,b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier));
-  el.innerHTML = sorted.map(p => `
+  const el=document.getElementById('admin-player-list');
+  el.innerHTML='<div style="font-size:15px;color:var(--muted);padding:8px 0">Loading…</div>';
+  const players=await loadPlayers();
+  if(!players.length){el.innerHTML='<div style="font-size:16px;color:var(--muted);padding:12px 0;">No players yet.</div>';return;}
+  const sorted=[...players].sort((a,b)=>TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier));
+  el.innerHTML=sorted.map(p=>`
     <div class="admin-list-item">
       <img class="ali-skin" src="https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/24" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/24'">
       <span class="ali-name">${p.name}</span>
       <span class="ali-tier tc-${p.tier}">${p.tier}</span>
-      <span style="font-size:12px;color:var(--muted)">(${TIER_POINTS[p.tier]||0}pts)</span>
-      <span class="ali-mode">${MODES[p.mode]?.name||p.mode}</span>
-      <span style="font-size:11px;color:var(--muted)">${p.region||''}</span>
-      <button class="ali-del" onclick="adminDeletePlayer('${p.name.replace(/'/g,"\\'")}','${p.mode}')">\u2715</button>
+      <span style="font-size:11px;color:var(--muted)">${MODES[p.mode]?.name||p.mode} ${p.region||''}</span>
+      <button class="ali-del" onclick="adminDeletePlayer('${p.name.replace(/'/g,"\\'")}','${p.mode}')">✕</button>
     </div>`).join('');
 }
 
 /* =================== ADMIN: ACCOUNTS =================== */
 async function adminSaveAccount() {
-  const name = document.getElementById('ac-name').value.trim();
-  const rank = document.getElementById('ac-rank').value;
-  const note = document.getElementById('ac-note').value.trim();
-  if (!name) { setMsg('ac-msg','bad','Enter a username.'); return; }
+  const name=document.getElementById('ac-name').value.trim();
+  const pass=document.getElementById('ac-pass').value.trim();
+  const note=document.getElementById('ac-note').value.trim();
+  const ranks=[];
+  if(document.getElementById('ac-rank-vip').checked)    ranks.push('VIP');
+  if(document.getElementById('ac-rank-vipplus').checked) ranks.push('VIP+');
+  if(document.getElementById('ac-rank-og').checked)      ranks.push('OG');
+  if(!name){setMsg('ac-msg','bad','Enter a username.');return;}
   document.getElementById('saving-acc-ind').classList.add('show');
   setMsg('ac-msg','warn','Saving…');
   try {
-    let accounts = [...(await loadAccounts())];
-    const idx = accounts.findIndex(a => a.name.toLowerCase()===name.toLowerCase());
-    const entry = {name, rank, note};
-    if (idx>=0) accounts[idx]=entry; else accounts.push(entry);
+    let accounts=[...(await loadAccounts())];
+    const idx=accounts.findIndex(a=>a.name.toLowerCase()===name.toLowerCase());
+    const entry={name, password:pass||undefined, ranks, note};
+    if(idx>=0) accounts[idx]=entry; else accounts.push(entry);
     await saveAccounts(accounts);
-    document.getElementById('ac-name').value = '';
-    document.getElementById('ac-note').value = '';
+    document.getElementById('ac-name').value='';
+    document.getElementById('ac-pass').value='';
+    document.getElementById('ac-note').value='';
+    document.getElementById('ac-rank-vip').checked=false;
+    document.getElementById('ac-rank-vipplus').checked=false;
+    document.getElementById('ac-rank-og').checked=false;
     renderAdminAccountList();
-    setMsg('ac-msg','ok', idx>=0 ? `✔ Updated ${name}.` : `✔ Added ${name}.`);
-  } catch(e) { setMsg('ac-msg','bad','\u2715 '+e.message); }
-  finally { document.getElementById('saving-acc-ind').classList.remove('show'); }
+    setMsg('ac-msg','ok',idx>=0?`✔ Updated ${name}.`:`✔ Added ${name}.`);
+  } catch(e){setMsg('ac-msg','bad','✕ '+e.message);}
+  finally{document.getElementById('saving-acc-ind').classList.remove('show');}
 }
-
 async function adminDeleteAccount(name) {
-  try {
-    let accounts = (await loadAccounts()).filter(a => a.name!==name);
-    await saveAccounts(accounts);
-    renderAdminAccountList();
-  } catch(e) { alert('Error: '+e.message); }
+  try{let a=(await loadAccounts()).filter(x=>x.name!==name);await saveAccounts(a);renderAdminAccountList();}
+  catch(e){alert('Error: '+e.message);}
 }
-
 async function adminClearAccounts() {
-  if (!confirm('Delete ALL accounts?')) return;
-  try { await saveAccounts([]); renderAdminAccountList(); }
-  catch(e) { alert('Error: '+e.message); }
+  if(!confirm('Delete ALL accounts?')) return;
+  try{await saveAccounts([]);renderAdminAccountList();}catch(e){alert('Error: '+e.message);}
 }
-
 async function renderAdminAccountList() {
-  const el = document.getElementById('admin-account-list');
-  el.innerHTML = '<div style="font-size:15px;color:var(--muted);padding:8px 0">Loading…</div>';
-  const accounts = await loadAccounts();
-  if (!accounts.length) { el.innerHTML = '<div style="font-size:16px;color:var(--muted);padding:12px 0;">No accounts yet.</div>'; return; }
-  el.innerHTML = accounts.map(a => {
-    const badgeCls = a.rank ? `rank-${a.rank.replace('+','plus')}` : 'rank-none';
-    return `<div class="admin-list-item">
+  const el=document.getElementById('admin-account-list');
+  el.innerHTML='<div style="font-size:15px;color:var(--muted);padding:8px 0">Loading…</div>';
+  const accounts=await loadAccounts();
+  if(!accounts.length){el.innerHTML='<div style="font-size:16px;color:var(--muted);padding:12px 0;">No accounts yet.</div>';return;}
+  el.innerHTML=accounts.map(a=>`
+    <div class="admin-list-item">
       <img class="ali-skin" src="https://mc-heads.net/avatar/${encodeURIComponent(a.name)}/24" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/24'">
       <span class="ali-name">${a.name}</span>
-      ${a.rank ? `<span class="rank-badge ${badgeCls}">${a.rank}</span>` : '<span style="font-size:12px;color:var(--muted)">no rank</span>'}
-      ${a.note ? `<span style="font-size:13px;color:var(--muted);flex:1">${a.note}</span>` : '<span style="flex:1"></span>'}
-      <button class="ali-del" onclick="adminDeleteAccount('${a.name.replace(/'/g,"\\'")}')">\u2715</button>
-    </div>`;
-  }).join('');
+      ${rankBadgesHtml(a.ranks||[])||'<span style="font-size:12px;color:var(--muted)">no rank</span>'}
+      ${a.password?'<span style="font-size:12px;color:var(--green3)">🔑 has pw</span>':''}
+      ${a.note?`<span style="font-size:12px;color:var(--muted)">${a.note}</span>`:''}
+      <button class="ali-del" onclick="adminDeleteAccount('${a.name.replace(/'/g,"\\'")}')">✕</button>
+    </div>`).join('');
 }
 
 /* =================== PUBLIC SEARCH =================== */
 async function lookup() {
-  const name = document.getElementById('si').value.trim();
-  if (!name) return;
-  const el = document.getElementById('playerResult');
-  el.innerHTML = `<div class="state-msg"><span class="ico">\uD83D\uDD0D</span>Looking up <strong>${name}</strong>\u2026</div>`;
+  const name=document.getElementById('si').value.trim(); if(!name)return;
+  const el=document.getElementById('playerResult');
+  el.innerHTML=`<div class="state-msg"><span class="ico">🔍</span>Looking up <strong>${name}</strong>…</div>`;
   try {
-    const mr = await fetch(`https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(name)}`);
-    if (!mr.ok) { el.innerHTML=`<div class="state-msg err"><span class="ico">\u274C</span>Player not found.</div>`; return; }
-    const moj = await mr.json();
-    renderPlayer(moj.name, moj.id);
-  } catch(e) {
-    el.innerHTML = `<div class="state-msg err"><span class="ico">\u26A0\uFE0F</span>${e.message}</div>`;
-  }
+    const mr=await fetch(`https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(name)}`);
+    if(!mr.ok){el.innerHTML=`<div class="state-msg err"><span class="ico">❌</span>Player not found.</div>`;return;}
+    const moj=await mr.json();
+    renderPlayer(moj.name,moj.id);
+  } catch(e){el.innerHTML=`<div class="state-msg err"><span class="ico">⚠️</span>${e.message}</div>`;}
 }
+async function renderPlayer(name,uuid) {
+  const el=document.getElementById('playerResult');
+  const [all,accounts]=await Promise.all([loadPlayers(),loadAccounts()]);
+  const entries=all.filter(p=>p.name.toLowerCase()===name.toLowerCase());
+  const acc=accounts.find(a=>a.name.toLowerCase()===name.toLowerCase());
+  const ov=entries.length?[...entries].sort((a,b)=>TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier))[0].tier:null;
+  const ovCls=ov||'UNRANKED';
+  const head=`https://mc-heads.net/avatar/${encodeURIComponent(name)}/56`;
+  const nmcUrl=`https://namemc.com/profile/${encodeURIComponent(name)}`;
+  const badges=rankBadgesHtml(acc?.ranks||[]);
 
-async function renderPlayer(name, uuid) {
-  const el = document.getElementById('playerResult');
-  const [all, accounts] = await Promise.all([loadPlayers(), loadAccounts()]);
-  const entries = all.filter(p => p.name.toLowerCase()===name.toLowerCase());
-  const acc = accounts.find(a => a.name.toLowerCase()===name.toLowerCase());
-  const ov = entries.length
-    ? [...entries].sort((a,b)=>TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier))[0].tier
-    : null;
-  const ovCls = ov||'UNRANKED';
-  const head = `https://mc-heads.net/avatar/${encodeURIComponent(name)}/56`;
-  const namemcUrl = `https://namemc.com/profile/${encodeURIComponent(name)}`;
-  const rankBadge = acc?.rank ? `<span class="rank-badge rank-${acc.rank.replace('+','plus')}" style="margin-left:6px">${acc.rank}</span>` : '';
-
-  const cards = Object.entries(MODES).map(([k,m]) => {
-    const e = entries.find(p => p.mode===k);
-    const tier = e?.tier||null;
-    const cls  = tier||'UNRANKED';
+  const cards=Object.entries(MODES).map(([k,m])=>{
+    const e=entries.find(p=>p.mode===k);
+    const tier=e?.tier||null; const cls=tier||'UNRANKED';
     return `<div class="mode-card bc-${cls}">
-      <div class="mc-top">
-        <img class="mc-icon" src="${m.icon}" alt="${m.name}">
+      <div class="mc-top"><img class="mc-icon" src="${m.icon}" alt="${m.name}">
         <div><div class="mc-name">${m.name}</div><div class="mc-sub">${e?e.region||'':''}</div></div>
       </div>
       <div class="mc-tier-row">
         <span class="mc-tier tc-${cls}">${tier||'Unranked'}</span>
-        ${tier ? `<span style="font-size:14px;color:var(--muted)">${TIER_POINTS[tier]} pts</span>` : ''}
+        ${tier?`<span style="font-size:14px;color:var(--muted)">${TIER_POINTS[tier]} pts</span>`:''}
       </div>
       <div class="mc-footer"><span>${e?e.region||'':''}</span></div>
     </div>`;
   }).join('');
 
-  el.innerHTML = `
+  el.innerHTML=`
     <div class="player-card">
       <img class="player-skin" src="${head}" alt="${name}" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/56'">
       <div>
-        <div class="pname">${name}${rankBadge}</div>
-        ${acc?.note ? `<div class="pmeta" style="margin-bottom:2px">${acc.note}</div>` : ''}
-        <a class="namemc-link" href="${namemcUrl}" target="_blank" rel="noopener">\u2197 View on NameMC</a>
+        <div class="pname">${name}${badges?`<span class="rank-badges-row">${badges}</span>`:''}</div>
+        ${acc?.note?`<div class="pmeta" style="margin-bottom:2px">${acc.note}</div>`:''}
+        <a class="namemc-link" href="${nmcUrl}" target="_blank" rel="noopener">↗ View on NameMC</a>
       </div>
       <div class="p-overall">
         <div class="p-overall-tier tc-${ovCls}">${ov||'Unranked'}</div>
@@ -964,15 +1020,15 @@ async function renderPlayer(name, uuid) {
       </div>
     </div>
     <div style="margin-bottom:36px">
-      <div class="section-head"><span class="sh-title">\uD83D\uDCCA ALL GAMEMODES</span><div class="sh-line"></div></div>
+      <div class="section-head"><span class="sh-title">📊 ALL GAMEMODES</span><div class="sh-line"></div></div>
       <div class="modes-grid">${cards}</div>
     </div>`;
 }
 
-document.getElementById('si').addEventListener('keydown', e => { if(e.key==='Enter') lookup(); });
+document.getElementById('si').addEventListener('keydown',e=>{ if(e.key==='Enter') lookup(); });
 
 /* preload on startup */
-Promise.all([loadPlayers(), loadAccounts()]);
+Promise.all([loadPlayers(), loadAccounts(), loadRankText()]);
 </script>
 </body>
 </html>
