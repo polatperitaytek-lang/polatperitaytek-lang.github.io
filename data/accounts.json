@@ -40,14 +40,5 @@
     "password": "suleymanTe123",
     "ranks": [],
     "note": "Member"
-  },
-  {
-    "name": "ItzPertoTe",
-    "password": "pertotek123",
-    "ranks": [
-      "OG",
-      "Owner"
-    ],
-    "note": ""
   }
 ]
