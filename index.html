@@ -598,8 +598,8 @@ const ADMIN_PASS    = 'abctiers2025';
 const PLAYERS_FILE  = 'data/players.json';
 const ACCOUNTS_FILE = 'data/accounts.json';
 const RANKTEXT_FILE = 'data/ranktext.json';
-const PUBLIC_OWNER  = 'polatperitaytek-lang';  // e.g. 'ItzPertoTe'
-const PUBLIC_REPO   = 'polatperitaytek-lang.github.io';  // e.g. 'abctiers'
+const PUBLIC_OWNER  = '';  // e.g. 'ItzPertoTe'
+const PUBLIC_REPO   = '';  // e.g. 'abctiers'
 /* ====================================== */
 
 const MODES = {
@@ -672,24 +672,48 @@ async function rawFetch(filePath) {
   const {owner,repo} = resolveRepo();
   if (!owner||!repo) return null;
   try {
-    const res = await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/main/${filePath}?t=${Date.now()}`);
-    if (res.ok) return await res.json();
+    // Use GitHub API without token for public repos — always fresh, no CDN delay
+    const res = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`,
+      { headers:{ Accept:'application/vnd.github+json' } }
+    );
+    if (res.ok) {
+      const json = await res.json();
+      return JSON.parse(atob(json.content.replace(/\n/g,'')));
+    }
   } catch {}
   return null;
 }
 
 /* =================== DATA LOADING =================== */
-async function loadPlayers()  {
-  // Always re-fetch from GitHub raw URL (no cache) so all visitors see live data
+async function loadPlayers(forceRefresh=false) {
+  if (!forceRefresh && cachedPlayers !== null) return cachedPlayers;
+  // Try GitHub API first (always live, no CDN cache)
+  const token = getGHConfig().token;
+  if (token) {
+    try {
+      const r = await ghReadFile(PLAYERS_FILE);
+      cachedPlayers = r?.content ?? [];
+      return cachedPlayers;
+    } catch {}
+  }
+  // Fallback: raw URL with aggressive cache-busting for public visitors
   const fresh = await rawFetch(PLAYERS_FILE);
-  if (fresh !== null) cachedPlayers = fresh;
-  else if (!cachedPlayers) cachedPlayers = (await ghReadFile(PLAYERS_FILE))?.content ?? [];
+  cachedPlayers = fresh ?? [];
   return cachedPlayers;
 }
-async function loadAccounts() {
+async function loadAccounts(forceRefresh=false) {
+  if (!forceRefresh && cachedAccounts !== null) return cachedAccounts;
+  const token = getGHConfig().token;
+  if (token) {
+    try {
+      const r = await ghReadFile(ACCOUNTS_FILE);
+      cachedAccounts = r?.content ?? [];
+      return cachedAccounts;
+    } catch {}
+  }
   const fresh = await rawFetch(ACCOUNTS_FILE);
-  if (fresh !== null) cachedAccounts = fresh;
-  else if (!cachedAccounts) cachedAccounts = (await ghReadFile(ACCOUNTS_FILE))?.content ?? [];
+  cachedAccounts = fresh ?? [];
   return cachedAccounts;
 }
 async function loadRankText() {
@@ -700,9 +724,22 @@ async function loadRankText() {
   }
   return cachedRankText;
 }
-async function savePlayers(p)  { cachedPlayers  = p; const c=await ghReadFile(PLAYERS_FILE);  await ghWriteFile(PLAYERS_FILE,  p, c?.sha||null); }
-async function saveAccounts(a) { cachedAccounts = a; const c=await ghReadFile(ACCOUNTS_FILE); await ghWriteFile(ACCOUNTS_FILE, a, c?.sha||null); }
-async function saveRankText(r) { cachedRankText = r; const c=await ghReadFile(RANKTEXT_FILE); await ghWriteFile(RANKTEXT_FILE, r, c?.sha||null); }
+async function savePlayers(p) {
+  // Write to GitHub then invalidate cache so UI refreshes from live data
+  const cur = await ghReadFile(PLAYERS_FILE);
+  await ghWriteFile(PLAYERS_FILE, p, cur?.sha||null);
+  cachedPlayers = p; // update in-memory immediately with what we just saved
+}
+async function saveAccounts(a) {
+  const cur = await ghReadFile(ACCOUNTS_FILE);
+  await ghWriteFile(ACCOUNTS_FILE, a, cur?.sha||null);
+  cachedAccounts = a;
+}
+async function saveRankText(r) {
+  const cur = await ghReadFile(RANKTEXT_FILE);
+  await ghWriteFile(RANKTEXT_FILE, r, cur?.sha||null);
+  cachedRankText = r;
+}
 
 /* =================== RANK TEXT =================== */
 function applyRankText(data) {
@@ -769,7 +806,7 @@ function showPage(p) {
 async function renderOverallLB() {
   const el = document.getElementById('overall-lb-content');
   el.innerHTML = '<div class="lb-empty"><div class="lb-empty-sub">Loading…</div></div>';
-  const [all, accounts] = await Promise.all([loadPlayers(), loadAccounts()]);
+  const [all, accounts] = await Promise.all([loadPlayers(true), loadAccounts(true)]);
   if (!all.length) {
     el.innerHTML = '<div class="lb-empty"><div class="lb-empty-title">NO PLAYERS YET</div><div class="lb-empty-sub">No players have been ranked yet.</div></div>';
     return;
@@ -837,7 +874,7 @@ async function renderLeaderboard(gm) {
   ).join('');
   const el = document.getElementById('lb-content');
   el.innerHTML = `<div class="lb-empty"><div class="lb-empty-sub">Loading…</div></div>`;
-  const [all, accounts] = await Promise.all([loadPlayers(), loadAccounts()]);
+  const [all, accounts] = await Promise.all([loadPlayers(true), loadAccounts(true)]);
   const players = all.filter(p => p.mode===gm);
   if (!players.length) {
     el.innerHTML = `<div class="lb-empty"><div class="lb-empty-title">NO RANKINGS YET</div><div class="lb-empty-sub">No players ranked in this mode yet.</div></div>`;
@@ -863,7 +900,7 @@ async function renderLeaderboard(gm) {
 async function renderGMLeaderboard(gm) {
   const el = document.getElementById('gm-lb-content');
   el.innerHTML = `<div class="lb-empty"><div class="lb-empty-sub">Loading…</div></div>`;
-  const [all,accounts] = await Promise.all([loadPlayers(),loadAccounts()]);
+  const [all,accounts] = await Promise.all([loadPlayers(true),loadAccounts(true)]);
   const players = all.filter(p=>p.mode===gm);
   if (!players.length) { el.innerHTML=`<div class="lb-empty"><div class="lb-empty-title">NO RANKINGS YET</div><div class="lb-empty-sub">No players ranked in this mode yet.</div></div>`; return; }
   players.sort((a,b)=>TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier));
@@ -1152,7 +1189,7 @@ async function renderUserHome() {
   const badges = rankBadgesHtml(loggedUser.ranks||[]);
 
   // Load player's tier data
-  const all = await loadPlayers();
+  const all = await loadPlayers(true);
   const entries = all.filter(p => p.name.toLowerCase()===name.toLowerCase());
 
   let rankingsHtml = '';
