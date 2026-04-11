@@ -36,7 +36,10 @@
   {
     "name": "ItzPertoTe",
     "password": "pertotek123",
-    "ranks": [],
-    "note": ""
+    "ranks": [
+      "OG",
+      "Owner"
+    ],
+    "note": "Owner"
   }
 ]
