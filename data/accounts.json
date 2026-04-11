@@ -1,13 +1,5 @@
 [
   {
-    "name": "Tekno24",
-    "password": "tugiTe123",
-    "ranks": [
-      "VIP+"
-    ],
-    "note": "Member"
-  },
-  {
     "name": "bekomeister1real",
     "password": "bekoTe123",
     "ranks": [
@@ -40,5 +32,14 @@
     "password": "suleymanTe123",
     "ranks": [],
     "note": "Member"
+  },
+  {
+    "name": "ItzPertoTe",
+    "password": "pertotek123",
+    "ranks": [
+      "OG",
+      "Owner"
+    ],
+    "note": ""
   }
 ]
