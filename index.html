@@ -18,12 +18,14 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:repeating-linear-gradient(0deg,transparent,transparent 15px,rgba(0,60,0,.07) 15px,rgba(0,60,0,.07) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,rgba(0,60,0,.07) 15px,rgba(0,60,0,.07) 16px);}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:200;background-color:#3b1f0a;
+nav{position:sticky;top:0;z-index:200;overflow:visible;background-color:#3b1f0a;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='16' height='16' fill='%233b1f0a'/%3E%3Crect x='0' y='0' width='8' height='8' fill='%23572c10'/%3E%3Crect x='8' y='8' width='8' height='8' fill='%23572c10'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%234a2409'/%3E%3Crect x='12' y='0' width='4' height='4' fill='%23452108'/%3E%3Crect x='0' y='12' width='4' height='4' fill='%23452108'/%3E%3Crect x='6' y='2' width='2' height='2' fill='%236b3a18'/%3E%3Crect x='2' y='6' width='2' height='2' fill='%236b3a18'/%3E%3Crect x='10' y='10' width='2' height='2' fill='%236b3a18'/%3E%3Crect x='14' y='6' width='2' height='2' fill='%23291508'/%3E%3C/svg%3E");
   border-bottom:4px solid #1a0a02;box-shadow:0 4px 0 #0d0501;}
 nav::after{content:'';display:block;height:3px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='3'%3E%3Crect width='4' height='3' fill='%231a0a02'/%3E%3Crect x='4' width='4' height='3' fill='%232a1005'/%3E%3Crect x='8' width='4' height='3' fill='%230d0501'/%3E%3C/svg%3E") repeat-x;}
-.nav-inner{display:flex;align-items:center;padding:0 8px;height:52px;overflow-x:auto;}
+.nav-inner{display:flex;align-items:center;padding:0 8px;height:52px;overflow-x:auto;overflow-y:visible;}
 .nav-inner::-webkit-scrollbar{height:0;}
+/* nav must allow dropdown to overflow */
+nav{overflow:visible!important;}
 .nav-logo{font-family:'Press Start 2P',monospace;font-size:12px;color:#f5c842;text-shadow:2px 2px 0 #5c3317,3px 3px 0 #1a0a02;display:flex;align-items:center;height:100%;padding:0 14px 0 8px;border-right:3px solid #1a0a02;margin-right:4px;letter-spacing:1px;white-space:nowrap;}
 .nav-logo span{color:#a3e635;}
 .nav-btn{display:flex;align-items:center;justify-content:center;height:100%;gap:6px;padding:0 12px;font-family:'Press Start 2P',monospace;font-size:7px;color:#d4a96a;cursor:pointer;border:none;background:none;text-shadow:1px 1px 0 #1a0a02;letter-spacing:.5px;white-space:nowrap;border-right:2px solid #1a0a02;position:relative;transition:background .1s,color .1s;flex-shrink:0;}
@@ -112,6 +114,8 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 .rank-VIPplus{background:linear-gradient(135deg,#3a2800,#2a2000);border:2px solid #ffd700;color:#fff4a0;}
 /* OG: red */
 .rank-OG{background:linear-gradient(135deg,#3a0a0a,#2a0505);border:2px solid #ff3333;color:#ff8888;}
+/* OWNER: light blue + blue */
+.rank-Owner{background:linear-gradient(135deg,#0a1a3a,#051228);border:2px solid #4488ff;color:#99ccff;}
 .rank-badges-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
 
 /* overall grid */
@@ -154,11 +158,15 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 .rank-card-VIPplus::before{background:linear-gradient(90deg,#ffd700,#fff4a0,#ffd700);}
 .rank-card-OG{background:linear-gradient(135deg,#1a0505,#0e0303);border-color:#ff3333;}
 .rank-card-OG::before{background:linear-gradient(90deg,#ff3333,#ff8888,#ff3333);}
+.rank-card-Owner{background:linear-gradient(135deg,#050f1e,#030a14);border-color:#4488ff;}
+.rank-card-Owner::before{background:linear-gradient(90deg,#4488ff,#99ccff,#4488ff);}
 .rank-card-icon{font-size:48px;margin-bottom:14px;display:block;}
 .rank-card-name{font-family:'Press Start 2P',monospace;font-size:16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
 .rank-card-name-VIP{color:#ffaa44;}
 .rank-card-name-VIPplus{color:#fff4a0;}
 .rank-card-name-OG{color:#ff8888;}
+.rank-card-name-Owner{color:#99ccff;}
+.rank-card-title-Owner{color:#4488ff;}
 .rank-card-title{font-family:'Press Start 2P',monospace;font-size:8px;margin-bottom:8px;letter-spacing:.5px;}
 .rank-card-title-VIP{color:#e07820;}
 .rank-card-title-VIPplus{color:#ffd700;}
@@ -342,17 +350,8 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 
   <!-- PAGE: OVERALL -->
   <div id="page-overall">
-    <div class="section-head"><span class="sh-title"><img src="./logos/overall.svg" alt="">OVERALL</span><div class="sh-line"></div></div>
-    <div class="overall-grid">
-      <div class="omc" onclick="showGM('vanilla')"><img class="omc-icon" src="./logos/vanilla.svg" alt=""><div class="omc-name">Vanilla</div><div class="omc-desc">Crystal PvP</div></div>
-      <div class="omc" onclick="showGM('uhc')"><img class="omc-icon" src="./logos/uhc.svg" alt=""><div class="omc-name">UHC</div><div class="omc-desc">UHC Combat</div></div>
-      <div class="omc" onclick="showGM('pot')"><img class="omc-icon" src="./logos/pot.svg" alt=""><div class="omc-name">Pot</div><div class="omc-desc">Diamond Pot</div></div>
-      <div class="omc" onclick="showGM('sword')"><img class="omc-icon" src="./logos/sword.svg" alt=""><div class="omc-name">Sword</div><div class="omc-desc">Sword Combat</div></div>
-      <div class="omc" onclick="showGM('axe')"><img class="omc-icon" src="./logos/axe.svg" alt=""><div class="omc-name">Axe</div><div class="omc-desc">Axe PvP</div></div>
-      <div class="omc" onclick="showGM('mace')"><img class="omc-icon" src="./logos/mace.svg" alt=""><div class="omc-name">Mace</div><div class="omc-desc">Mace PvP</div></div>
-      <div class="omc" onclick="showGM('nethop')"><img class="omc-icon" src="./logos/nethop.svg" alt=""><div class="omc-name">NethOP</div><div class="omc-desc">Netherite Pot</div></div>
-      <div class="omc" onclick="showGM('smp')"><img class="omc-icon" src="./logos/smp.svg" alt=""><div class="omc-name">SMP</div><div class="omc-desc">Smp style PvP</div></div>
-    </div>
+    <div class="section-head"><span class="sh-title"><img src="./logos/overall.svg" alt="">OVERALL LEADERBOARD</span><div class="sh-line"></div></div>
+    <div id="overall-lb-content"><div class="lb-empty"><div class="lb-empty-sub">Loading…</div></div></div>
   </div>
 
   <!-- PAGE: GAMEMODE -->
@@ -407,6 +406,16 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
         <div class="rank-card-title rank-card-title-OG" id="rank-title-OG" contenteditable="false">Original Member</div>
         <div class="rank-card-desc" id="rank-desc-OG" contenteditable="false">The rarest rank. OG members were here from the very beginning and helped shape what ABCTiers is today. Respect the legends.</div>
         <div class="rank-edit-hint" id="rank-hint-OG" style="display:none">✎ Click title/desc to edit • Admin only</div>
+      </div>
+
+      <div class="rank-card rank-card-Owner">
+        <span class="rank-card-icon">🔵</span>
+        <div class="rank-card-name rank-card-name-Owner">
+          <span class="rank-badge rank-Owner">Owner</span>
+        </div>
+        <div class="rank-card-title rank-card-title-Owner" id="rank-title-Owner" contenteditable="false">Server Owner</div>
+        <div class="rank-card-desc" id="rank-desc-Owner" contenteditable="false">The highest authority. The Owner built and runs ABCTiers from the ground up. This rank is reserved for the founder only.</div>
+        <div class="rank-edit-hint" id="rank-hint-Owner" style="display:none">✎ Click title/desc to edit • Admin only</div>
       </div>
 
     </div>
@@ -501,6 +510,7 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
                 <label class="rank-check-label"><input type="checkbox" id="ac-rank-vip" value="VIP"><span class="rank-badge rank-VIP" style="font-size:6px">VIP</span></label>
                 <label class="rank-check-label"><input type="checkbox" id="ac-rank-vipplus" value="VIP+"><span class="rank-badge rank-VIPplus" style="font-size:6px">VIP+</span></label>
                 <label class="rank-check-label"><input type="checkbox" id="ac-rank-og" value="OG"><span class="rank-badge rank-OG" style="font-size:6px">OG</span></label>
+                <label class="rank-check-label"><input type="checkbox" id="ac-rank-owner" value="Owner"><span class="rank-badge rank-Owner" style="font-size:6px">Owner</span></label>
               </div>
             </div>
             <div class="admin-field"><label class="admin-label">Note (optional)</label><input class="admin-input" id="ac-note" type="text" placeholder="e.g. OG member since 2024" autocomplete="off"/></div>
@@ -580,7 +590,7 @@ const MODES = {
 };
 const TIER_ORDER  = ['HT1','LT1','HT2','LT2','HT3','LT3','HT4','LT4','HT5','LT5'];
 const TIER_POINTS = {HT1:60,LT1:45,HT2:30,LT2:20,HT3:10,LT3:6,HT4:4,LT4:3,HT5:2,LT5:1};
-const ALL_RANKS   = ['VIP','VIP+','OG'];
+const ALL_RANKS   = ['VIP','VIP+','OG','Owner'];
 
 let isAdmin  = false;
 let loggedUser = null; // { name, ranks[] }
@@ -661,7 +671,7 @@ async function saveRankText(r) { cachedRankText = r; const c=await ghReadFile(RA
 
 /* =================== RANK TEXT =================== */
 function applyRankText(data) {
-  ['VIP','VIPplus','OG'].forEach(k => {
+  ['VIP','VIPplus','OG','Owner'].forEach(k => {
     const ti = document.getElementById('rank-title-'+k);
     const di = document.getElementById('rank-desc-'+k);
     if (ti && data['title_'+k]) ti.textContent = data['title_'+k];
@@ -669,7 +679,7 @@ function applyRankText(data) {
   });
 }
 function enableRankEditing(on) {
-  ['VIP','VIPplus','OG'].forEach(k => {
+  ['VIP','VIPplus','OG','Owner'].forEach(k => {
     const ti = document.getElementById('rank-title-'+k);
     const di = document.getElementById('rank-desc-'+k);
     const hi = document.getElementById('rank-hint-'+k);
@@ -680,8 +690,8 @@ function enableRankEditing(on) {
 }
 function buildRankTextEditor() {
   const el = document.getElementById('rank-text-editor');
-  el.innerHTML = ['VIP','VIPplus','OG'].map(k => {
-    const label = k==='VIPplus'?'VIP+':k;
+  el.innerHTML = ['VIP','VIPplus','OG','Owner'].map(k => {
+    const label = k==='VIPplus'?'VIP+':k==='Owner'?'Owner':k;
     return `<div style="margin-bottom:18px;padding:14px;background:var(--bg);border:1px solid var(--border2)">
       <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:var(--muted);margin-bottom:10px">${label}</div>
       <div class="admin-field"><label class="admin-label">Title</label><input class="admin-input" id="rte-title-${k}" value="${(cachedRankText||{})['title_'+k]||''}" placeholder="Rank title"/></div>
@@ -713,12 +723,65 @@ function showPage(p) {
   ['btn-overall','btn-gm','btn-lb','btn-ranks','btn-tt'].forEach(b => {
     const el = document.getElementById(b); if(el) el.classList.remove('active');
   });
-  if (p==='overall')     document.getElementById('btn-overall').classList.add('active');
-  if (p==='leaderboard') document.getElementById('btn-lb').classList.add('active');
+  if (p==='overall')     { document.getElementById('btn-overall').classList.add('active'); renderOverallLB(); }
+  if (p==='leaderboard') { document.getElementById('btn-lb').classList.add('active'); renderLeaderboard(currentLBMode); }
   if (p==='ranks')       { document.getElementById('btn-ranks').classList.add('active'); loadRankText(); }
   if (p==='tiertested')  document.getElementById('btn-tt').classList.add('active');
-  if (p==='leaderboard') renderLeaderboard(currentLBMode);
   closeDD();
+}
+
+async function renderOverallLB() {
+  const el = document.getElementById('overall-lb-content');
+  el.innerHTML = '<div class="lb-empty"><div class="lb-empty-sub">Loading…</div></div>';
+  const [all, accounts] = await Promise.all([loadPlayers(), loadAccounts()]);
+  if (!all.length) {
+    el.innerHTML = '<div class="lb-empty"><div class="lb-empty-title">NO PLAYERS YET</div><div class="lb-empty-sub">No players have been ranked yet.</div></div>';
+    return;
+  }
+  // Aggregate points per unique player (best tier per gamemode)
+  const playerMap = {};
+  all.forEach(p => {
+    const pts = TIER_POINTS[p.tier] || 0;
+    if (!playerMap[p.name.toLowerCase()]) playerMap[p.name.toLowerCase()] = { name: p.name, total: 0, breakdown: [] };
+    // only count best tier per mode
+    const existing = playerMap[p.name.toLowerCase()].breakdown.find(b => b.mode === p.mode);
+    if (!existing) {
+      playerMap[p.name.toLowerCase()].breakdown.push({ mode: p.mode, tier: p.tier, pts });
+      playerMap[p.name.toLowerCase()].total += pts;
+    } else if (pts > existing.pts) {
+      playerMap[p.name.toLowerCase()].total += (pts - existing.pts);
+      existing.tier = p.tier; existing.pts = pts;
+    }
+  });
+  const sorted = Object.values(playerMap).sort((a,b) => b.total - a.total);
+  const rows = sorted.map((p,i) => {
+    const rc = i===0?'r1':i===1?'r2':i===2?'r3':'';
+    const acc = accounts.find(a => a.name.toLowerCase()===p.name.toLowerCase());
+    const badges = rankBadgesHtml(acc?.ranks||[]);
+    const breakdown = p.breakdown.map(b =>
+      `<span style="font-size:12px;color:var(--muted)">${MODES[b.mode]?.name||b.mode}:<span class="tc-${b.tier}" style="font-family:'Press Start 2P',monospace;font-size:9px"> ${b.tier}</span></span>`
+    ).join(' ');
+    return `<tr>
+      <td><span class="lb-rank ${rc}">${i===0?'👑':'#'+(i+1)}</span></td>
+      <td>
+        <div class="lb-player">
+          <img class="lb-skin" src="https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/28" alt="" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/28'">
+          <div>
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span class="lb-name">${p.name}</span>${badges}</div>
+            <div style="margin-top:3px;display:flex;gap:8px;flex-wrap:wrap">${breakdown}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <span style="font-family:'Press Start 2P',monospace;font-size:14px;color:var(--green4)">${p.total}</span>
+        <span style="font-size:13px;color:var(--muted)"> pts</span>
+      </td>
+    </tr>`;
+  }).join('');
+  el.innerHTML = `<table class="lb-table">
+    <thead><tr><th>#</th><th>Player</th><th>Total Points</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
 }
 function showGM(gm) {
   currentGM = gm;
@@ -791,8 +854,23 @@ function rankBadgesHtml(ranks) {
 }
 
 /* =================== DROPDOWN =================== */
-function toggleDD() { const o=document.getElementById('ddMenu').classList.toggle('open'); document.getElementById('caret').classList.toggle('open',o); }
-function closeDD()  { document.getElementById('ddMenu').classList.remove('open'); document.getElementById('caret').classList.remove('open'); }
+function toggleDD() {
+  const menu = document.getElementById('ddMenu');
+  const btn  = document.getElementById('btn-gm');
+  const open = menu.classList.toggle('open');
+  document.getElementById('caret').classList.toggle('open', open);
+  if (open) {
+    const rect = btn.getBoundingClientRect();
+    menu.style.position = 'fixed';
+    menu.style.top  = rect.bottom + 'px';
+    menu.style.left = rect.left + 'px';
+    menu.style.zIndex = '9999';
+  }
+}
+function closeDD() {
+  document.getElementById('ddMenu').classList.remove('open');
+  document.getElementById('caret').classList.remove('open');
+}
 document.addEventListener('click',e=>{ if(!document.getElementById('dd').contains(e.target)) closeDD(); });
 
 /* =================== OVERLAYS =================== */
@@ -924,6 +1002,7 @@ async function adminSaveAccount() {
   if(document.getElementById('ac-rank-vip').checked)    ranks.push('VIP');
   if(document.getElementById('ac-rank-vipplus').checked) ranks.push('VIP+');
   if(document.getElementById('ac-rank-og').checked)      ranks.push('OG');
+  if(document.getElementById('ac-rank-owner').checked)   ranks.push('Owner');
   if(!name){setMsg('ac-msg','bad','Enter a username.');return;}
   document.getElementById('saving-acc-ind').classList.add('show');
   setMsg('ac-msg','warn','Saving…');
@@ -939,6 +1018,7 @@ async function adminSaveAccount() {
     document.getElementById('ac-rank-vip').checked=false;
     document.getElementById('ac-rank-vipplus').checked=false;
     document.getElementById('ac-rank-og').checked=false;
+    document.getElementById('ac-rank-owner').checked=false;
     renderAdminAccountList();
     setMsg('ac-msg','ok',idx>=0?`✔ Updated ${name}.`:`✔ Added ${name}.`);
   } catch(e){setMsg('ac-msg','bad','✕ '+e.message);}
@@ -1028,7 +1108,7 @@ async function renderPlayer(name,uuid) {
 document.getElementById('si').addEventListener('keydown',e=>{ if(e.key==='Enter') lookup(); });
 
 /* preload on startup */
-Promise.all([loadPlayers(), loadAccounts(), loadRankText()]);
+Promise.all([loadPlayers(), loadAccounts(), loadRankText()]).then(() => renderOverallLB());
 </script>
 </body>
 </html>
