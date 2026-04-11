@@ -267,6 +267,37 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
 .rank-edit-input{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.1);color:inherit;font-family:'VT323',monospace;font-size:inherit;outline:none;padding:2px 0;transition:border-color .15s;}
 .rank-edit-input:focus{border-bottom-color:rgba(255,255,255,.4);}
 
+.greeting-bar{
+  padding:14px 24px;margin-bottom:24px;
+  background:var(--surface);border:3px solid var(--border2);
+  box-shadow:4px 4px 0 #0a1a0a;
+  font-family:'Press Start 2P',monospace;font-size:11px;color:var(--green4);
+  text-shadow:2px 2px 0 #0a3a0a;letter-spacing:1px;
+  text-align:center;
+}
+.user-home-grid{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:start;}
+@media(max-width:600px){.user-home-grid{grid-template-columns:1fr;}}
+.user-profile-card{
+  background:var(--surface);border:3px solid var(--border2);
+  box-shadow:4px 4px 0 #0a1a0a;padding:24px;text-align:center;
+}
+.user-mc-head{
+  width:128px;height:128px;image-rendering:pixelated;
+  border:3px solid var(--border2);margin:0 auto 16px;display:block;
+}
+.user-profile-name{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--white);text-shadow:2px 2px 0 #0a3a0a;margin-bottom:10px;}
+.user-rankings-card{
+  background:var(--surface);border:3px solid var(--border2);
+  box-shadow:4px 4px 0 #0a1a0a;padding:24px;
+}
+.user-rankings-title{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--green4);text-shadow:2px 2px 0 #0a3a0a;letter-spacing:1px;margin-bottom:16px;}
+.user-ranking-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.user-ranking-row:last-child{border-bottom:none;}
+.user-ranking-mode-icon{width:24px;height:24px;object-fit:contain;image-rendering:pixelated;filter:brightness(1.6) saturate(.7);}
+.user-ranking-mode{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--text);flex:1;}
+.user-ranking-tier{font-family:'Press Start 2P',monospace;font-size:12px;}
+.user-ranking-pts{font-size:15px;color:var(--muted);}
+.user-no-rankings{font-size:18px;color:var(--muted);padding:16px 0;}
 ::-webkit-scrollbar{width:6px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border2);}
@@ -289,26 +320,14 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
   <div class="nav-inner">
     <div class="nav-logo">ABC<span>TIERS</span></div>
 
+    <button class="nav-btn" id="btn-home" onclick="showPage('user-home')" style="display:none">
+      🏠 Home
+    </button>
+
     <button class="nav-btn active" id="btn-overall" onclick="showPage('overall')">
       <img class="nav-btn-icon" src="./logos/overall.svg" alt="">Overall
     </button>
 
-    <div class="dropdown" id="dd">
-      <button class="nav-btn" id="btn-gm" onclick="toggleDD()">
-        <img class="nav-btn-icon" id="gm-nav-icon" src="./logos/vanilla.svg" alt="">
-        Gamemode<span class="caret" id="caret">▼</span>
-      </button>
-      <div class="dropdown-menu" id="ddMenu">
-        <div class="dropdown-item" onclick="showGM('vanilla')"><img class="dd-icon" src="./logos/vanilla.svg" alt="">Vanilla</div>
-        <div class="dropdown-item" onclick="showGM('uhc')"><img class="dd-icon" src="./logos/uhc.svg" alt="">UHC</div>
-        <div class="dropdown-item" onclick="showGM('pot')"><img class="dd-icon" src="./logos/pot.svg" alt="">Pot</div>
-        <div class="dropdown-item" onclick="showGM('sword')"><img class="dd-icon" src="./logos/sword.svg" alt="">Sword</div>
-        <div class="dropdown-item" onclick="showGM('axe')"><img class="dd-icon" src="./logos/axe.svg" alt="">Axe</div>
-        <div class="dropdown-item" onclick="showGM('mace')"><img class="dd-icon" src="./logos/mace.svg" alt="">Mace</div>
-        <div class="dropdown-item" onclick="showGM('nethop')"><img class="dd-icon" src="./logos/nethop.svg" alt="">NethOP</div>
-        <div class="dropdown-item" onclick="showGM('smp')"><img class="dd-icon" src="./logos/smp.svg" alt="">SMP</div>
-      </div>
-    </div>
 
     <button class="nav-btn" id="btn-lb" onclick="showPage('leaderboard')">
       🏅 Leaderboard
@@ -347,6 +366,11 @@ main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:36px 20p
   </div>
 
   <div id="playerResult"></div>
+
+  <!-- PAGE: USER HOME -->
+  <div id="page-user-home" style="display:none">
+    <div id="user-home-content"></div>
+  </div>
 
   <!-- PAGE: OVERALL -->
   <div id="page-overall">
@@ -655,8 +679,19 @@ async function rawFetch(filePath) {
 }
 
 /* =================== DATA LOADING =================== */
-async function loadPlayers()  { if(!cachedPlayers)  cachedPlayers  = await rawFetch(PLAYERS_FILE)  ?? (await ghReadFile(PLAYERS_FILE))?.content  ?? []; return cachedPlayers; }
-async function loadAccounts() { if(!cachedAccounts) cachedAccounts = await rawFetch(ACCOUNTS_FILE) ?? (await ghReadFile(ACCOUNTS_FILE))?.content ?? []; return cachedAccounts; }
+async function loadPlayers()  {
+  // Always re-fetch from GitHub raw URL (no cache) so all visitors see live data
+  const fresh = await rawFetch(PLAYERS_FILE);
+  if (fresh !== null) cachedPlayers = fresh;
+  else if (!cachedPlayers) cachedPlayers = (await ghReadFile(PLAYERS_FILE))?.content ?? [];
+  return cachedPlayers;
+}
+async function loadAccounts() {
+  const fresh = await rawFetch(ACCOUNTS_FILE);
+  if (fresh !== null) cachedAccounts = fresh;
+  else if (!cachedAccounts) cachedAccounts = (await ghReadFile(ACCOUNTS_FILE))?.content ?? [];
+  return cachedAccounts;
+}
 async function loadRankText() {
   if (!cachedRankText) {
     const data = await rawFetch(RANKTEXT_FILE) ?? (await ghReadFile(RANKTEXT_FILE))?.content ?? {};
@@ -717,17 +752,18 @@ async function adminSaveRankText() {
 
 /* =================== NAV =================== */
 function showPage(p) {
-  ['overall','gamemode','leaderboard','ranks','tiertested','admin'].forEach(x =>
-    document.getElementById('page-'+x).style.display='none');
-  document.getElementById('page-'+p).style.display='block';
-  ['btn-overall','btn-gm','btn-lb','btn-ranks','btn-tt'].forEach(b => {
+  ['overall','gamemode','leaderboard','ranks','tiertested','admin','user-home'].forEach(x => {
+    const el = document.getElementById('page-'+x); if(el) el.style.display='none';
+  });
+  const pg = document.getElementById('page-'+p); if(pg) pg.style.display='block';
+  ['btn-overall','btn-lb','btn-ranks','btn-tt','btn-home'].forEach(b => {
     const el = document.getElementById(b); if(el) el.classList.remove('active');
   });
   if (p==='overall')     { document.getElementById('btn-overall').classList.add('active'); renderOverallLB(); }
   if (p==='leaderboard') { document.getElementById('btn-lb').classList.add('active'); renderLeaderboard(currentLBMode); }
   if (p==='ranks')       { document.getElementById('btn-ranks').classList.add('active'); loadRankText(); }
   if (p==='tiertested')  document.getElementById('btn-tt').classList.add('active');
-  closeDD();
+  if (p==='user-home')   { document.getElementById('btn-home').classList.add('active'); renderUserHome(); }
 }
 
 async function renderOverallLB() {
@@ -789,7 +825,6 @@ function showGM(gm) {
   document.getElementById('gm-icon').src = MODES[gm].icon;
   document.getElementById('gm-nav-icon').src = MODES[gm].icon;
   showPage('gamemode');
-  document.getElementById('btn-gm').classList.add('active');
   renderGMLeaderboard(gm);
 }
 
@@ -854,24 +889,8 @@ function rankBadgesHtml(ranks) {
 }
 
 /* =================== DROPDOWN =================== */
-function toggleDD() {
-  const menu = document.getElementById('ddMenu');
-  const btn  = document.getElementById('btn-gm');
-  const open = menu.classList.toggle('open');
-  document.getElementById('caret').classList.toggle('open', open);
-  if (open) {
-    const rect = btn.getBoundingClientRect();
-    menu.style.position = 'fixed';
-    menu.style.top  = rect.bottom + 'px';
-    menu.style.left = rect.left + 'px';
-    menu.style.zIndex = '9999';
-  }
-}
-function closeDD() {
-  document.getElementById('ddMenu').classList.remove('open');
-  document.getElementById('caret').classList.remove('open');
-}
-document.addEventListener('click',e=>{ if(!document.getElementById('dd').contains(e.target)) closeDD(); });
+function toggleDD() {}
+function closeDD() {}
 
 /* =================== OVERLAYS =================== */
 function openOverlay(id)  { document.getElementById(id).classList.add('open'); }
@@ -916,6 +935,8 @@ async function doLogin() {
       document.getElementById('user-badge').style.display='inline-flex';
       document.getElementById('login-label').textContent='Logout';
       document.getElementById('btn-login').onclick = doLogout;
+      document.getElementById('btn-home').style.display='flex';
+      showPage('user-home');
       return;
     }
   } catch {}
@@ -927,6 +948,7 @@ function doLogout() {
   isAdmin = false; loggedUser = null;
   document.getElementById('admin-badge').style.display='none';
   document.getElementById('user-badge').style.display='none';
+  document.getElementById('btn-home').style.display='none';
   document.getElementById('login-label').textContent='Login';
   document.getElementById('btn-login').onclick = ()=>openOverlay('login-overlay');
   enableRankEditing(false);
@@ -1106,6 +1128,62 @@ async function renderPlayer(name,uuid) {
 }
 
 document.getElementById('si').addEventListener('keydown',e=>{ if(e.key==='Enter') lookup(); });
+
+/* =================== USER HOME =================== */
+function getTurkeyGreeting() {
+  // Turkey is UTC+3
+  const now = new Date();
+  const turkeyHour = (now.getUTCHours() + 3) % 24;
+  if (turkeyHour >= 8  && turkeyHour < 12)  return 'Good Morning';
+  if (turkeyHour >= 12 && turkeyHour < 17)  return 'Good Afternoon';
+  if (turkeyHour >= 17 && turkeyHour < 22)  return 'Good Evening';
+  if (turkeyHour >= 22 || turkeyHour < 3)   return 'Good Night';
+  return 'Hi'; // 3am - 8am
+}
+
+async function renderUserHome() {
+  if (!loggedUser) return;
+  const el = document.getElementById('user-home-content');
+  el.innerHTML = '<div class="state-msg"><span class="ico">⏳</span>Loading…</div>';
+
+  const greeting = getTurkeyGreeting();
+  const name = loggedUser.name;
+  const headUrl = `https://mc-heads.net/avatar/${encodeURIComponent(name)}/128`;
+  const badges = rankBadgesHtml(loggedUser.ranks||[]);
+
+  // Load player's tier data
+  const all = await loadPlayers();
+  const entries = all.filter(p => p.name.toLowerCase()===name.toLowerCase());
+
+  let rankingsHtml = '';
+  if (entries.length) {
+    const sorted = [...entries].sort((a,b) => TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier));
+    rankingsHtml = sorted.map(e => `
+      <div class="user-ranking-row">
+        <img class="user-ranking-mode-icon" src="${MODES[e.mode]?.icon||''}" alt="${e.mode}">
+        <span class="user-ranking-mode">${MODES[e.mode]?.name||e.mode}</span>
+        <span class="user-ranking-tier tc-${e.tier}">${e.tier}</span>
+        <span class="user-ranking-pts">${TIER_POINTS[e.tier]||0} pts</span>
+      </div>`).join('');
+  } else {
+    rankingsHtml = '<div class="user-no-rankings">You have no rankings yet.</div>';
+  }
+
+  el.innerHTML = `
+    <div class="greeting-bar">${greeting}, ${name}!</div>
+    <div class="user-home-grid">
+      <div class="user-profile-card">
+        <img class="user-mc-head" src="${headUrl}" alt="${name}" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/128'">
+        <div class="user-profile-name">${name}</div>
+        ${badges ? `<div class="rank-badges-row" style="justify-content:center;margin-bottom:8px">${badges}</div>` : ''}
+        <a class="namemc-link" href="https://namemc.com/profile/${encodeURIComponent(name)}" target="_blank" rel="noopener" style="justify-content:center">↗ NameMC</a>
+      </div>
+      <div class="user-rankings-card">
+        <div class="user-rankings-title">📊 YOUR RANKINGS</div>
+        ${rankingsHtml}
+      </div>
+    </div>`;
+}
 
 /* preload on startup */
 Promise.all([loadPlayers(), loadAccounts(), loadRankText()]).then(() => renderOverallLB());
